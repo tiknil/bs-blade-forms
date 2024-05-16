@@ -1,0 +1,97 @@
+.ss-wrapper {
+  position: relative;
+
+  .ss-box {
+    position: relative;
+    text-align: start;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+
+    word-wrap: normal;
+    overflow: hidden;
+
+    div {
+      display: block;
+      word-wrap: normal;
+      overflow: hidden;
+      width: 100%;
+    }
+  }
+
+  .ss-ghost-select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;;
+  }
+
+  .ss-dropdown {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% - 4px);
+    background-color: white;
+
+    z-index: 2;
+
+    width: 100%;
+    max-height: 250px;
+
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: 0 0 6px 6px;
+    overflow: auto;
+
+    &.hidden {
+      display: none;
+    }
+
+    .ss-dropdown-search {
+      position: sticky;
+      top: 0;
+      background-color: white;
+      border-bottom: 1px solid var(--bs-border-color);
+
+      padding: .5rem;
+    }
+
+    .empty-results {
+      display: block;
+    }
+
+    .ss-options:has(.ss-option:not(.hidden)) + .empty-results {
+      display: none;
+    }
+
+    .ss-option {
+      padding: .5rem 1rem;
+      border-bottom: 1px solid var(--bs-border-color);
+      cursor: pointer;
+
+      .ss-remove-icon {
+        float: right;
+        margin-right: -.25rem;
+        display: none;
+      }
+
+      &.hidden {
+        display: none;
+      }
+
+      &:hover {
+        background-color: var(--bs-gray-100);
+      }
+
+      &.selected {
+        background-color: var(--bs-gray-200);
+        font-weight: 600;
+
+        .ss-remove-icon {
+          display: inline;
+        }
+      }
+    }
+  }
+}
