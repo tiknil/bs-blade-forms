@@ -1,7 +1,7 @@
 import { CustomSelect } from '@/components/custom-select.ts'
 
-export class SearchSelect extends CustomSelect {
+export class MultiSelect extends CustomSelect {
   constructor(rootEl: Element) {
-    super(rootEl, false)
+    super(rootEl, true)
   }
 }

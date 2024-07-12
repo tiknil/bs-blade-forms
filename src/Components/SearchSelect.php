@@ -8,7 +8,7 @@ class SearchSelect extends BaseFormInput
 {
     public function __construct(
         public string $name,
-        public mixed $value = null,
+        public string|int|null $value = null,
         public bool $required = false,
         public string $placeholder = '',
 

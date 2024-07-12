@@ -1,12 +1,12 @@
 @php($livewire = is_subclass_of(static::class, \Livewire\Component::class))
 
 @if(!empty($label))
-  <x-bs::label name="{{ $name }}">
+  <x-bs::label name="{{ $fieldName }}">
     {{ $label }}
   </x-bs::label>
 @endif
 
-<div class="ss-wrapper"
+<div class="ms-wrapper"
      @if($livewire) wire:ignore.self data-livewire @endif
      @if(!empty($id)) id="{{ $id }}" @endif>
 
@@ -16,24 +16,21 @@
     * Browser automatic validation for missing data
     * Livewire attributes work (e.g. wire:model)
   --}}
-  <select name="{{ $name }}"
+  <select name="{{ $fieldName }}"
           tabindex="-1"
-          @if($livewire) wire:key="ss-{{ $name }}" @endif
+          multiple
+          @if($livewire) wire:key="ss-{{ $fieldName }}" @endif
           @if($required) required @endif
           {{ $attributes->whereStartsWith('wire:model') }}
           class="ss-ghost-select">
 
-    <option @selected(($value ?? $emptyValue) == $emptyValue) value="{{ $emptyValue }}"></option>
-    
     @if($slot->hasActualContent())
       {{ $slot }}
     @else
       @foreach($options as $key => $label)
-        <option value="{{ $key }}" @selected($value == $key)>{{ $label }}</option>
+        <option value="{{ $key }}" @selected(in_array($key, $value))>{{ $label }}</option>
       @endforeach
     @endif
-
-
 
   </select>
 
@@ -62,18 +59,19 @@
        @if($livewire) wire:ignore @endif
   >
 
-    <div class="ss-dropdown-search">
-      <input type="text" class="form-control form-control-sm "
-             placeholder="{{ $searchPlaceholder ?: __('bs-blade-forms::components.search-select.search-placeholder') }}"/>
-    </div>
+    @if($search)
+      <div class="ss-dropdown-search">
+        <input type="text" class="form-control form-control-sm "
+               placeholder="{{ $searchPlaceholder ?: __('bs-blade-forms::components.search-select.search-placeholder') }}"/>
+      </div>
+    @endif
 
     {{-- This element is cloned by JS to render an option --}}
     <template class="ss-option-template">
       <div class="ss-option" data-key="">
         <span></span>
-        @if($allowClear)
-          <i class="bi bi-x-lg ss-remove-icon"></i>
-        @endif
+
+        <i class="bi bi-check-lg ss-check-icon"></i>
       </div>
     </template>
 
@@ -82,7 +80,7 @@
     </div>
 
     <div class="text-muted p-2 empty-results">
-      {{ __('bs-blade-forms::components.search-select.no-results') }}
+      {{ __('bs-blade-forms::components.multi-select.no-options') }}
     </div>
 
   </div>

@@ -11,7 +11,7 @@ abstract class BaseFormInput extends BaseComponent
         $this->useOld();
     }
 
-    public function useOld()
+    public function useOld(): void
     {
         if (!$this->disableOld && property_exists($this, 'name') && property_exists($this, 'value')) {
             $this->value = old($this->name, $this->value);

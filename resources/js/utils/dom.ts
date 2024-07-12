@@ -45,15 +45,14 @@ export const throttle =
 
       lastThrottleRun = Date.now()
     } else {
-      const diff = Date.now() - lastThrottleRun!
       clearTimeout(throttleTimeout)
 
       throttleTimeout = setTimeout(() => {
-        if (diff >= delay) {
+        if (Date.now() - lastThrottleRun! >= delay) {
           fn(...args)
 
           lastThrottleRun = Date.now()
         }
-      }, delay - diff)
+      }, delay - (Date.now() - lastThrottleRun!))
     }
   }
