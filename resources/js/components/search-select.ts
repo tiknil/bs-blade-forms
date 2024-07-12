@@ -1,4 +1,4 @@
-import { debounce } from '@/utils/dom.ts'
+import { debounce, throttle } from '@/utils/dom.ts'
 
 class SearchSelect {
   rootEl: Element
@@ -18,6 +18,8 @@ class SearchSelect {
 
   // The current known value of the select
   current: string
+  active: string | null = null
+  isOpen: boolean = false
 
   get emptyValue(): string {
     return (this.select.firstElementChild as HTMLOptionElement).value
@@ -46,17 +48,45 @@ class SearchSelect {
   init = () => {
     this.populateDropdown()
 
+    for (const [key, opt] of this.dropdownOptions) {
+      opt.addEventListener('mousemove', () =>
+        throttle(
+          () => (key !== this.active ? this.setActive(key) : null),
+          100,
+        )(),
+      )
+    }
+
     this.uiBox.addEventListener('click', () => this.toggle())
 
     document.addEventListener('click', (e) => {
       if (!this.rootEl.contains(e.target as Node)) {
-        this.close()
+        this.close(false)
       }
     })
 
     document.addEventListener('keyup', (e) => {
       if (e.key === 'Escape') {
+        this.close(false)
+      }
+    })
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === ' ' && this.uiBox === document.activeElement) {
+        this.toggle()
+      }
+
+      if (this.isOpen && this.active !== null && e.key === 'Enter') {
+        this.onOptionSelected(this.active)
         this.close()
+      }
+
+      if (this.isOpen && this.active !== null && e.key === 'ArrowDown') {
+        this.moveActiveDown()
+      }
+
+      if (this.isOpen && this.active !== null && e.key === 'ArrowUp') {
+        this.moveActiveUp()
       }
     })
 
@@ -100,6 +130,7 @@ class SearchSelect {
 
       return
     }
+
     if (!window['Livewire']) {
       console.error('MISSING LIVEWIRE GLOBAL OBJECT!')
       return
@@ -128,33 +159,49 @@ class SearchSelect {
   }
 
   open = () => {
+    this.isOpen = true
     this.dropdown.classList.remove('hidden')
-    this.dropdownSearch.focus()
+    setTimeout(() => this.dropdownSearch.focus(), 25)
+
+    this.setActive(this.dropdownOptions.keys().next().value)
   }
 
-  close = () => {
+  close = (withFocus: boolean = true) => {
+    this.isOpen = false
     this.dropdown.classList.add('hidden')
 
     this.dropdownSearch.value = ''
     this.dropdownSearch.dispatchEvent(new Event('input'))
+
+    if (withFocus) {
+      this.uiBox.focus()
+    }
   }
 
   toggle = () => {
-    this.dropdown.classList.contains('hidden') ? this.open() : this.close()
+    this.isOpen ? this.close() : this.open()
   }
 
   search = () => {
-    const s = this.dropdownSearch.value
+    const s = this.dropdownSearch.value.toLowerCase().trim()
 
-    for (const [, opt] of this.dropdownOptions) {
-      if (s === '') {
+    let newActive: string | null = null
+
+    for (const [key, opt] of this.dropdownOptions) {
+      const shouldShow = s === '' || opt.innerText.toLowerCase().includes(s)
+
+      if (shouldShow) {
         opt.classList.remove('hidden')
-      } else if (opt.innerText.includes(s)) {
-        opt.classList.remove('hidden')
+
+        if (newActive === null) {
+          newActive = key
+        }
       } else {
         opt.classList.add('hidden')
       }
     }
+
+    this.setActive(newActive)
   }
 
   populateDropdown = () => {
@@ -203,9 +250,56 @@ class SearchSelect {
 
     this.select.value = key
 
-    // Dispatch the event insted of calling update() so other listeners are notified
-    // e.g. Livewire
+    // Instead of directly calling update() we dispatch the change event
+    // This ensures all listeners are notified properly.
     this.select.dispatchEvent(new Event('change'))
+  }
+
+  setActive = (key: string | null) => {
+    if (key === this.active) {
+      return
+    }
+
+    if (this.active !== null) {
+      this.dropdownOptions.get(this.active)?.classList.remove('active')
+    }
+
+    if (key !== null) {
+      this.dropdownOptions.get(key)?.classList.add('active')
+
+      this.dropdownOptions
+        .get(key)
+        ?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+    }
+
+    this.active = key
+  }
+
+  moveActiveDown = () => {
+    let next = false
+    for (const key of this.dropdownOptions.keys()) {
+      if (next) {
+        this.setActive(key)
+        break
+      }
+      if (key === this.active) {
+        next = true
+      }
+    }
+  }
+
+  moveActiveUp = () => {
+    let prev: string | null = null
+    for (const key of this.dropdownOptions.keys()) {
+      if (key === this.active) {
+        if (prev) {
+          this.setActive(prev)
+        }
+        break
+      }
+
+      prev = key
+    }
   }
 
   update = () => {
@@ -245,7 +339,6 @@ document
 // Check if added elements are search-select elements
 const observer = new MutationObserver(function (mutations) {
   mutations.forEach(function (mutation) {
-    console.log(mutation)
     mutation.addedNodes.forEach(function (addedNode) {
       // HTMLElements are type 1
       if (addedNode.nodeType !== 1) return

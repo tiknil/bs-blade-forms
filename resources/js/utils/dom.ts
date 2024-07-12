@@ -24,12 +24,36 @@ export function addChildEventListener(
   })
 }
 
-let timeout = 0
+let dispatchTimeout = 0
 export const debounce =
   <T>(fn: (...args: T[]) => void, delay: number) =>
   (...args: T[]) => {
-    clearTimeout(timeout)
+    clearTimeout(dispatchTimeout)
     // adds `as unknown as number` to ensure setTimeout returns a number
     // like window.setTimeout
-    timeout = setTimeout(() => fn(...args), delay)
+    dispatchTimeout = setTimeout(() => fn(...args), delay)
+  }
+
+let lastThrottleRun: null | number = null
+let throttleTimeout: number = 0
+
+export const throttle =
+  <T>(fn: (...args: T[]) => void, delay: number) =>
+  (...args: T[]) => {
+    if (lastThrottleRun === null) {
+      fn(...args)
+
+      lastThrottleRun = Date.now()
+    } else {
+      const diff = Date.now() - lastThrottleRun!
+      clearTimeout(throttleTimeout)
+
+      throttleTimeout = setTimeout(() => {
+        if (diff >= delay) {
+          fn(...args)
+
+          lastThrottleRun = Date.now()
+        }
+      }, delay - diff)
+    }
   }

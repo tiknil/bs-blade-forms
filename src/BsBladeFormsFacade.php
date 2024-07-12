@@ -5,7 +5,7 @@ namespace Tiknil\BsBladeForms;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Tiknil\BsBladeForms\Skeleton\SkeletonClass
+ * @see \Tiknil\BsBladeForms
  */
 class BsBladeFormsFacade extends Facade
 {
