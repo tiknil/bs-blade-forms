@@ -7,8 +7,11 @@ export class CustomSelect {
 
   /* Dropdown elements */
   dropdown: HTMLElement
-  dropdownSearch: HTMLInputElement | null = null
   dropdownOptions: Map<string, HTMLElement> = new Map()
+
+  dropdownSearch: HTMLInputElement
+  dropdownSelectAllBtn: HTMLButtonElement | null = null
+  dropdownUnselectAllBtn: HTMLButtonElement | null = null
 
   /* UI base elements */
   uiBox: HTMLElement
@@ -37,6 +40,13 @@ export class CustomSelect {
     this.dropdown = rootEl.querySelector('.ss-dropdown')!
     this.dropdownSearch = this.dropdown.querySelector(
       '.ss-dropdown-search input',
+    )!
+
+    this.dropdownSelectAllBtn = this.dropdown.querySelector(
+      '.ss-dropdown-search .ss-select-all',
+    )
+    this.dropdownUnselectAllBtn = this.dropdown.querySelector(
+      '.ss-dropdown-search .ss-unselect-all',
     )
 
     this.uiBox = rootEl.querySelector('.ss-box')!
@@ -128,6 +138,13 @@ export class CustomSelect {
     })
 
     this.select.addEventListener('change', this.update)
+
+    this.dropdownSelectAllBtn?.addEventListener('click', (e) =>
+      this.setAll(true),
+    )
+    this.dropdownUnselectAllBtn?.addEventListener('click', (e) =>
+      this.setAll(false),
+    )
 
     this.update()
 
@@ -289,6 +306,19 @@ export class CustomSelect {
     if (!this.multiple) {
       this.close()
     }
+  }
+
+  setAll = (selected: boolean) => {
+    for (const option of this.select.options) {
+      const key = option.value.trim()
+
+      option.selected = this.dropdownOptions
+        .get(key)
+        ?.classList.contains('hidden')
+        ? option.selected
+        : selected
+    }
+    this.select.dispatchEvent(new Event('change'))
   }
 
   setActive = (key: string | null) => {

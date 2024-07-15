@@ -24,7 +24,7 @@
           class="ss-ghost-select">
 
     <option @selected(($value ?? $emptyValue) == $emptyValue) value="{{ $emptyValue }}"></option>
-    
+
     @if($slot->hasActualContent())
       {{ $slot }}
     @else
@@ -33,12 +33,9 @@
       @endforeach
     @endif
 
-
-
   </select>
 
   <x-bs::icon-group icon-class="{{ $icon }}">
-
     {{-- The element shown in the UI as if it's the actual select element --}}
     <div role="button"
          @if($livewire) wire:ignore @endif
@@ -64,7 +61,7 @@
 
     <div class="ss-dropdown-search">
       <input type="text" class="form-control form-control-sm "
-             placeholder="{{ $searchPlaceholder ?: __('bs-blade-forms::components.search-select.search-placeholder') }}"/>
+             placeholder="{{ $searchPlaceholder ?: __('bs-blade-forms::components.custom-select.search-placeholder') }}"/>
     </div>
 
     {{-- This element is cloned by JS to render an option --}}
@@ -72,7 +69,7 @@
       <div class="ss-option" data-key="">
         <span></span>
         @if($allowClear)
-          <i class="bi bi-x-lg ss-remove-icon"></i>
+          <i class="{{ config('bs-blade-forms.icons.unselect') }} ss-remove-icon"></i>
         @endif
       </div>
     </template>
@@ -82,7 +79,7 @@
     </div>
 
     <div class="text-muted p-2 empty-results">
-      {{ __('bs-blade-forms::components.search-select.no-results') }}
+      {{ __('bs-blade-forms::components.custom-select.no-results') }}
     </div>
 
   </div>

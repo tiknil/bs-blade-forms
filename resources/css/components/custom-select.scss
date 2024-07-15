@@ -1,9 +1,13 @@
 .ss-wrapper, .ms-wrapper {
-  position: relative;
 
-  &:focus {
-    outline: 1px solid red;
-  }
+  --cs-active-color: var(--bs-primary-bg-subtle, #cfe2ff);
+  --cs-selected-color: var(--bs-gray-200, #e9ecef);
+
+  --cs-border-width: var(--bs-border-width, 1px);
+  --cs-border-color: var(--bs-border-color, #dee2e6);
+
+
+  position: relative;
 
   .ss-box {
     position: relative;
@@ -33,7 +37,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -1;;
+    z-index: -1;
   }
 
   .ss-dropdown {
@@ -48,7 +52,7 @@
     width: 100%;
     height: fit-content;
 
-    border: var(--bs-border-width) solid var(--bs-border-color);
+    border: var(--cs-border-width) solid var(--cs-border-color);
     border-radius: 0 0 6px 6px;
 
     display: flex;
@@ -66,9 +70,17 @@
 
     .ss-dropdown-search {
       background-color: white;
-      border-bottom: 1px solid var(--bs-border-color);
+      border-bottom: 1px solid var(--cs-border-color);
 
       padding: .5rem;
+
+      display: flex;
+      flex-direction: row;
+      gap: .5rem;
+
+      input {
+        flex: 1
+      }
     }
 
     .empty-results {
@@ -81,7 +93,7 @@
 
     .ss-option {
       padding: .5rem 1rem;
-      border-bottom: 1px solid var(--bs-border-color);
+      border-bottom: var(--cs-border-width) solid var(--cs-border-color);
       cursor: pointer;
 
       .ss-remove-icon, .ss-check-icon {
@@ -96,7 +108,7 @@
 
 
       &.selected {
-        background-color: var(--bs-gray-200);
+        background-color: var(--cs-selected-color);
         font-weight: 600;
 
         .ss-remove-icon, .ss-check-icon {
@@ -105,7 +117,7 @@
       }
 
       &.active {
-        background-color: var(--bs-primary-bg-subtle);
+        background-color: var(--cs-active-color);
       }
     }
   }

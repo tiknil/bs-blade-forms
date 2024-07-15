@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'search-select' => [
+    'custom-select' => [
         'search-placeholder' => 'Cerca tra le opzioni',
         'no-results' => 'Nessun risultato',
-    ],
-    'multi-select' => [
-        'no-options' => 'Nessun opzione disponibile',
+
+        'select-all' => 'Seleziona tutto',
+        'unselect-all' => 'Deseleziona tutto',
     ],
 ];

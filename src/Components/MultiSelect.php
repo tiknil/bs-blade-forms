@@ -21,7 +21,6 @@ class MultiSelect extends BaseFormInput
         public ?string $icon = null,
 
         public array $options = [],
-        public bool $search = false,
         public string $searchPlaceholder = '',
 
     ) {

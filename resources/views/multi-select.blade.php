@@ -59,19 +59,31 @@
        @if($livewire) wire:ignore @endif
   >
 
-    @if($search)
-      <div class="ss-dropdown-search">
-        <input type="text" class="form-control form-control-sm "
-               placeholder="{{ $searchPlaceholder ?: __('bs-blade-forms::components.search-select.search-placeholder') }}"/>
-      </div>
-    @endif
+    <div class="ss-dropdown-search">
+
+      <input type="text" class="form-control form-control-sm"
+             autocomplete="off"
+             placeholder="{{ $searchPlaceholder ?: __('bs-blade-forms::components.custom-select.search-placeholder') }}"/>
+
+      <button class="btn btn-light ss-select-all"
+              type="button"
+              title="{{ __('bs-blade-forms::components.custom-select.select-all') }}">
+        <i class="{{ config('bs-blade-forms.icons.select-all') }}"></i>
+      </button>
+
+      <button class="btn btn-light ss-unselect-all"
+              type="button"
+              title="{{ __('bs-blade-forms::components.custom-select.unselect-all') }}">
+        <i class="{{ config('bs-blade-forms.icons.unselect-all') }}"></i>
+      </button>
+    </div>
 
     {{-- This element is cloned by JS to render an option --}}
     <template class="ss-option-template">
       <div class="ss-option" data-key="">
         <span></span>
 
-        <i class="bi bi-check-lg ss-check-icon"></i>
+        <i class="{{ config('bs-blade-forms.icons.select') }} ss-check-icon"></i>
       </div>
     </template>
 
@@ -80,7 +92,7 @@
     </div>
 
     <div class="text-muted p-2 empty-results">
-      {{ __('bs-blade-forms::components.multi-select.no-options') }}
+      {{ __('bs-blade-forms::components.custom-select.no-results') }}
     </div>
 
   </div>

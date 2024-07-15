@@ -6,6 +6,12 @@
 return [
     'label_class' => 'form-label',
 
-    'x-icon-class' => 'bi bi-x-lg',
-    'check-icon-class' => 'bi bi-check-lg',
+    'icons' => [
+        'select' => 'bi bi-check-lg',
+        'unselect' => 'bi bi-x-lg',
+
+        'select-all' => 'bi bi-check2-all',
+        'unselect-all' => 'bi bi-dash-square-dotted',
+
+    ],
 ];
