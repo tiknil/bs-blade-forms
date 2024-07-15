@@ -5,19 +5,16 @@ namespace Tiknil\BsBladeForms\Components;
 use Illuminate\Contracts\View\View;
 use Tiknil\BsBladeForms\Components\Traits\WithStringValue;
 
-class Checkbox extends BaseFormInput
+class Radio extends BaseFormInput
 {
     use WithStringValue;
 
     public function __construct(
         public string $name,
-        string $value = '1',
-        public string $falseValue = '0',
+        mixed $value = false,
         public ?string $label = null,
 
         public bool $checked = false,
-
-        public bool $sendFalseValue = true,
     ) {
 
         $this->setValue($value);
@@ -26,17 +23,21 @@ class Checkbox extends BaseFormInput
     }
 
     /**
-     * Standard old behavior doesn't work an checks, because `value` is the string to submit, not the initial data
+     * Standard old behavior doesn't work an radios, because `value` is the string to submit, not the initial data
      *
      * @override
      */
     public function useOld(): void
     {
-        $this->checked = boolval(old($this->name, $this->checked));
+        $old = old($this->name, null);
+
+        if ($old !== null) {
+            $this->checked = $old === $this->value;
+        }
     }
 
     public function render(): View
     {
-        return view('bs-blade-forms::checkbox');
+        return view('bs-blade-forms::radio');
     }
 }
