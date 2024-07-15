@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) Giorgio Balduzzi
+Copyright (c) Tiknil srl
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
