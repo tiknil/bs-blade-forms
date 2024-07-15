@@ -19,6 +19,7 @@
   <select name="{{ $fieldName }}"
           tabindex="-1"
           multiple
+          id="{{ $fieldName }}"
           @if($livewire) wire:key="ss-{{ $fieldName }}" @endif
           @if($required) required @endif
           {{ $attributes->whereStartsWith('wire:model') }}

@@ -3,10 +3,14 @@
 namespace Tiknil\BsBladeForms\Components;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Tiknil\BsBladeForms\Components\Traits\WithOptions;
 
 class MultiSelect extends BaseFormInput
 {
+    use WithOptions;
+
     public array $value;
 
     public string $fieldName;
@@ -20,10 +24,12 @@ class MultiSelect extends BaseFormInput
         public ?string $label = null,
         public ?string $icon = null,
 
-        public array $options = [],
+        array|Collection $options = [],
         public string $searchPlaceholder = '',
 
     ) {
+
+        $this->setOptions($options);
 
         if (str_ends_with($this->name, '[]')) {
             $this->name = Str::replaceEnd('[]', '', $this->name);

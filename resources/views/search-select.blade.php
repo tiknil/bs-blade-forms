@@ -17,6 +17,7 @@
     * Livewire attributes work (e.g. wire:model)
   --}}
   <select name="{{ $name }}"
+          id="{{ $name }}"
           tabindex="-1"
           @if($livewire) wire:key="ss-{{ $name }}" @endif
           @if($required) required @endif
