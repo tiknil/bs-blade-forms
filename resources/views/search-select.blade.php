@@ -50,10 +50,11 @@
           &nbsp;
         @else
           {{ $placeholder }}
-        @endif</div>
+        @endif
+      </div>
       <div class="ss-value-label" style="display:none;"></div>
     </div>
-  </x-bs::icon-group >
+  </x-bs::icon-group>
 
   {{-- Option dropdown --}}
   <div class="ss-dropdown hidden"

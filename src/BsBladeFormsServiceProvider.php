@@ -38,7 +38,7 @@ class BsBladeFormsServiceProvider extends ServiceProvider
 
             $this->publishes([
                 __DIR__.'/../public/vendor/bs-blade-forms' => public_path('vendor/bs-blade-forms'),
-            ], ['bs-blade-forms:views', 'laravel-assets']);
+            ], ['bs-blade-forms:assets', 'laravel-assets']);
 
             // Publishing the translation files.
             $this->publishes([
