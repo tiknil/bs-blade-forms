@@ -1,6 +1,6 @@
 {
     "name": "tiknil/bs-blade-forms",
-    "description": "Laravel library of bootstrap blade components for common form creation use cases",
+    "description": "Collection of blade components for building form using bootstrap",
     "keywords": [
         "tiknil",
         "bs-blade-forms"

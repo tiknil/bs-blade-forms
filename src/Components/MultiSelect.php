@@ -17,7 +17,7 @@ class MultiSelect extends BaseFormInput
 
     public function __construct(
         public string $name,
-        ?array $value = null,
+        Collection|array|null $value = null,
         public bool $required = false,
         public string $placeholder = '',
 
@@ -37,6 +37,9 @@ class MultiSelect extends BaseFormInput
 
         $this->fieldName = "{$this->name}[]";
 
+        if (is_a($value, Collection::class)) {
+            $value = $value->toArray();
+        }
         $this->value = $value ?: [];
 
         parent::__construct();
