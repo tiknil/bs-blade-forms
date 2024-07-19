@@ -3,36 +3,38 @@
 namespace Tiknil\BsBladeForms\Components;
 
 use Illuminate\Contracts\View\View;
-use Tiknil\BsBladeForms\Components\Traits\WithStringValue;
+use Tiknil\BsBladeForms\Utils\EnumConverter;
 
 class Checkbox extends BaseFormInput
 {
-    use WithStringValue;
+    public mixed $value;
+
+    public mixed $falseValue;
 
     public function __construct(
-        public string $name,
-        string $value = '1',
-        public string $falseValue = '0',
+        string $name,
+        mixed $value = '1',
+        mixed $falseValue = '0',
         public ?string $label = null,
 
-        public bool $checked = false,
+        public ?bool $checked = null,
 
         public bool $sendFalseValue = true,
     ) {
 
-        $this->setValue($value);
+        $this->value = EnumConverter::enumToValue($value);
+        $this->falseValue = EnumConverter::enumToValue($falseValue);
 
-        parent::__construct();
+        parent::__construct($name);
     }
 
-    /**
-     * Standard old behavior doesn't work an checks, because `value` is the string to submit, not the initial data
-     *
-     * @override
-     */
-    public function useOld(): void
+    public function loadValue(mixed $value): void
     {
-        $this->checked = boolval(old($this->name, $this->checked));
+        if ($this->checked !== null) {
+            return;
+        }
+
+        $this->checked = boolval($value);
     }
 
     public function render(): View

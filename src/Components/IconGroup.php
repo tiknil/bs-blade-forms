@@ -6,9 +6,7 @@ use Illuminate\Contracts\View\View;
 
 class IconGroup extends BaseComponent
 {
-    public function __construct(public string $iconClass = '', public string $iconText = '')
-    {
-    }
+    public function __construct(public string $iconClass = '', public string $iconText = '') {}
 
     public function render(): View
     {

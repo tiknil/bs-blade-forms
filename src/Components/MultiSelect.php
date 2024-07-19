@@ -11,12 +11,12 @@ class MultiSelect extends BaseFormInput
 {
     use WithOptions;
 
-    public array $value;
+    public array $value = [];
 
     public string $fieldName;
 
     public function __construct(
-        public string $name,
+        string $name,
         Collection|array|null $value = null,
         public bool $required = false,
         public string $placeholder = '',
@@ -31,19 +31,28 @@ class MultiSelect extends BaseFormInput
 
         $this->setOptions($options);
 
-        if (str_ends_with($this->name, '[]')) {
-            $this->name = Str::replaceEnd('[]', '', $this->name);
+        if (str_ends_with($name, '[]')) {
+            $name = Str::replaceEnd('[]', '', $name);
         }
 
-        $this->fieldName = "{$this->name}[]";
+        $this->fieldName = "{$name}[]";
+
+        $this->loadValue($value);
+
+        parent::__construct($name);
+
+    }
+
+    public function loadValue(mixed $value): void
+    {
+        if ($this->value) {
+            return;
+        }
 
         if (is_a($value, Collection::class)) {
             $value = $value->toArray();
         }
         $this->value = $value ?: [];
-
-        parent::__construct();
-
     }
 
     public function render(): View

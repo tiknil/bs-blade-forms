@@ -11,7 +11,7 @@ class SearchSelect extends BaseFormInput
 {
     use WithOptions, WithStringValue;
 
-    //public array $options;
+    public ?string $value;
 
     public function __construct(
         public string $name,
@@ -31,9 +31,19 @@ class SearchSelect extends BaseFormInput
 
         $this->setOptions($options);
 
-        $this->setValue($value);
+        $this->value = $this->parseValue($value);
 
-        parent::__construct();
+        parent::__construct($this->name);
+
+    }
+
+    public function loadValue(mixed $value): void
+    {
+        if ($this->value !== null) {
+            return;
+        }
+
+        $this->value = $this->parseValue($value);
     }
 
     public function render(): View

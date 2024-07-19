@@ -3,37 +3,32 @@
 namespace Tiknil\BsBladeForms\Components;
 
 use Illuminate\Contracts\View\View;
-use Tiknil\BsBladeForms\Components\Traits\WithStringValue;
+use Tiknil\BsBladeForms\Utils\EnumConverter;
 
 class Radio extends BaseFormInput
 {
-    use WithStringValue;
-
     public function __construct(
-        public string $name,
-        mixed $value = false,
+        string $name,
+        public mixed $value,
         public ?string $label = null,
 
-        public bool $checked = false,
+        public ?bool $checked = null,
     ) {
 
-        $this->setValue($value);
+        $this->value = EnumConverter::enumToValue($value);
 
-        parent::__construct();
+        parent::__construct($name);
     }
 
-    /**
-     * Standard old behavior doesn't work an radios, because `value` is the string to submit, not the initial data
-     *
-     * @override
-     */
-    public function useOld(): void
+    public function loadValue(mixed $value): void
     {
-        $old = old($this->name, null);
-
-        if ($old !== null) {
-            $this->checked = $old === $this->value;
+        if ($this->checked !== null) {
+            return;
         }
+
+        $value = EnumConverter::enumToValue($value);
+
+        $this->checked = $value === $this->value;
     }
 
     public function render(): View

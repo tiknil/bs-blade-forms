@@ -9,6 +9,8 @@ class Textarea extends BaseFormInput
 {
     use WithStringValue;
 
+    public ?string $value;
+
     public function __construct(
         public string $name,
         mixed $value = null,
@@ -19,10 +21,19 @@ class Textarea extends BaseFormInput
 
     ) {
 
-        $this->setValue($value);
+        $this->value = $this->parseValue($value);
 
-        parent::__construct();
+        parent::__construct($this->name);
 
+    }
+
+    public function loadValue(mixed $value): void
+    {
+        if ($this->value !== null) {
+            return;
+        }
+
+        $this->value = $this->parseValue($value);
     }
 
     public function render(): View

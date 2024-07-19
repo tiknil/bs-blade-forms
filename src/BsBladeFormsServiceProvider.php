@@ -5,6 +5,7 @@ namespace Tiknil\BsBladeForms;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Tiknil\BsBladeForms\Console\PublishAssets;
+use Tiknil\BsBladeForms\Utils\ModelResolver;
 
 class BsBladeFormsServiceProvider extends ServiceProvider
 {
@@ -60,5 +61,7 @@ class BsBladeFormsServiceProvider extends ServiceProvider
         $this->app->singleton('bs-blade-forms', function () {
             return new BsBladeForms;
         });
+
+        $this->app->singleton(ModelResolver::class);
     }
 }

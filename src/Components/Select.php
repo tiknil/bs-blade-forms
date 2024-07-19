@@ -11,6 +11,8 @@ class Select extends BaseFormInput
 {
     use WithOptions, WithStringValue;
 
+    public ?string $value;
+
     public function __construct(
         public string $name,
         mixed $value = null,
@@ -24,10 +26,20 @@ class Select extends BaseFormInput
     ) {
 
         $this->setOptions($options);
-        $this->setValue($value);
 
-        parent::__construct();
+        $this->value = $this->parseValue($value);
 
+        parent::__construct($this->name);
+
+    }
+
+    public function loadValue(mixed $value): void
+    {
+        if ($this->value !== null) {
+            return;
+        }
+
+        $this->value = $this->parseValue($value);
     }
 
     public function render(): View

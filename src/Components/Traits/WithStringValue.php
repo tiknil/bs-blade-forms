@@ -2,22 +2,14 @@
 
 namespace Tiknil\BsBladeForms\Components\Traits;
 
-use BackedEnum;
-use UnitEnum;
+use Tiknil\BsBladeForms\Utils\EnumConverter;
 
 trait WithStringValue
 {
-    public ?string $value;
-
-    public function setValue(mixed $value): void
+    public function parseValue(mixed $value): ?string
     {
-        if (is_a($value, BackedEnum::class)) {
-            $this->value = $value->value;
-        } elseif (is_a($value, UnitEnum::class)) {
-            $this->value = $value->name;
-        } else {
-            $this->value = $value === null ? null : strval($value);
-        }
+        $value = EnumConverter::enumToValue($value);
 
+        return $value === null ? null : strval($value);
     }
 }
