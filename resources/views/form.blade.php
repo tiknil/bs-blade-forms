@@ -3,7 +3,5 @@
   @method($method)
 
   {{ $slot }}
-
-
-  {{ $endModel() }}
+  @php $endModel() @endphp
 </form>

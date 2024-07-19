@@ -1,0 +1,6 @@
+<label for="notes" class="form-label">
+      Notes
+  </label>
+
+<textarea id="notes" name="notes" class="form-control" type="notes" required="required">Lorem Ipsum</textarea>
+

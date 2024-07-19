@@ -1,0 +1,58 @@
+<div class="ss-wrapper"
+          >
+
+  
+  <select name="country"
+          id="country"
+          tabindex="-1"
+                              
+          class="ss-ghost-select">
+
+    <option selected value=""></option>
+
+                  <option value="it" >Italy</option>
+              <option value="de" >Germany</option>
+              <option value="fr" >France</option>
+              <option value="us" >United States</option>
+          
+  </select>
+
+  <div role="button"
+                  aria-label=""
+         tabindex="0"
+         class="form-select ss-box"
+    >
+
+      <div class="text-muted ss-placeholder">
+                  &nbsp;
+              </div>
+      <div class="ss-value-label" style="display:none;"></div>
+    </div>
+
+
+  
+  <div class="ss-dropdown hidden"
+         >
+
+    <div class="ss-dropdown-search">
+      <input type="text" class="form-control form-control-sm "
+             placeholder="bs-blade-forms::components.custom-select.search-placeholder"/>
+    </div>
+
+    
+    <template class="ss-option-template">
+      <div class="ss-option" data-key="">
+        <span></span>
+              </div>
+    </template>
+
+    
+    <div class="ss-options">
+    </div>
+
+    <div class="text-muted p-2 empty-results">
+      bs-blade-forms::components.custom-select.no-results
+    </div>
+
+  </div>
+</div>

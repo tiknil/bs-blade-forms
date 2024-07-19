@@ -1,0 +1,21 @@
+<label for="country" class="form-label">
+      Country
+  </label>
+
+<div class="input-group">
+    <span class="input-group-text">
+              <i class="bi bi-map"></i>
+            
+    </span>
+
+    <select id="country" name="country" class="form-select">
+          <option value="">-- Select --</option>
+    
+                  <option value="it" selected>Italy</option>
+              <option value="de" >Germany</option>
+              <option value="fr" >France</option>
+              <option value="us" >United States</option>
+            </select>
+  </div>
+
+

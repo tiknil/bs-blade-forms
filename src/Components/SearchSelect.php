@@ -2,8 +2,8 @@
 
 namespace Tiknil\BsBladeForms\Components;
 
-use Barryvdh\Reflection\DocBlock\Type\Collection;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Tiknil\BsBladeForms\Components\Traits\WithOptions;
 use Tiknil\BsBladeForms\Components\Traits\WithStringValue;
 

@@ -7,10 +7,14 @@ use Tiknil\BsBladeForms\BsBladeFormsServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {
-    public function setUp(): void
+    use InteractsWithViews;
+
+    protected function setUp(): void
     {
         parent::setUp();
-        // additional setup
+
+        bindModel(null);
+
     }
 
     protected function getPackageProviders($app)

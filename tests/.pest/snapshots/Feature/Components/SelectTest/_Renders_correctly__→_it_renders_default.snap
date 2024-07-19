@@ -1,0 +1,8 @@
+<select id="country" name="country" class="form-select">
+    
+                  <option value="it" >Italy</option>
+              <option value="de" >Germany</option>
+              <option value="fr" >France</option>
+              <option value="us" >United States</option>
+            </select>
+

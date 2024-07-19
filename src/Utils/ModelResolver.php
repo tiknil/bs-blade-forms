@@ -50,8 +50,8 @@ class ModelResolver
     {
         $fields = [];
 
-        // Identifica ogni gruppo di caratteri diverso da [, ] o ->
-        preg_match_all('/( [^\[\]\(->)]+ )/x', $name, $fields);
+        // Identifica ogni gruppo di caratteri diversi da [ e ]
+        preg_match_all('/([^(\[\])]+)/x', $name, $fields);
 
         return $fields[0];
     }

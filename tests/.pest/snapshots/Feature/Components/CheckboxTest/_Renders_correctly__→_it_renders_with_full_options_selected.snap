@@ -1,0 +1,14 @@
+<div class="form-check">
+      
+    <input type="hidden" name="enabled" value="b" />
+  
+  <input type="checkbox"
+         value="a"
+         name="enabled"
+         id="enabled"
+        checked    class="form-check-input" wire:model="enabled" />
+
+  <label for="enabled" class="form-check-label">
+      Test enabled
+  </label>
+</div>

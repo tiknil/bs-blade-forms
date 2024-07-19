@@ -3,6 +3,7 @@
 namespace Tiknil\BsBladeForms\Components;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 use Tiknil\BsBladeForms\Utils\ModelResolver;
 
 abstract class BaseFormInput extends BaseComponent
@@ -52,7 +53,6 @@ abstract class BaseFormInput extends BaseComponent
 
     protected function loadFromOld(): mixed
     {
-        return old($this->oldReference, null);
-
+        return Session::getOldInput($this->oldReference, null);
     }
 }

@@ -17,8 +17,6 @@ class Textarea extends BaseFormInput
 
         public ?string $label = null,
 
-        public bool $encodeContent = true
-
     ) {
 
         $this->value = $this->parseValue($value);
