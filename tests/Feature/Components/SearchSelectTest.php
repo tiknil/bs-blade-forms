@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Session;
-use Tiknil\BsBladeForms\Components\Searchselect;
+use Tiknil\BsBladeForms\Components\SearchSelect;
 use Tiknil\BsBladeForms\Tests\Data\TestModel;
 
 include_once 'tests/Data/TestOptions.php';
@@ -10,14 +10,14 @@ describe('Resolve initial value', function () {
 
     it('uses default value', function () {
 
-        $input = new Searchselect(name: 'country', options: TEST_OPTIONS);
+        $input = new SearchSelect(name: 'country', options: TEST_OPTIONS);
 
         expect($input->value)->toBeNull();
     });
 
     it('supports collection options', function () {
 
-        $input = new Searchselect(name: 'country', options: collect(TEST_OPTIONS));
+        $input = new SearchSelect(name: 'country', options: collect(TEST_OPTIONS));
 
         expect($input->options)->toEqual(TEST_OPTIONS);
 
@@ -29,7 +29,7 @@ describe('Resolve initial value', function () {
             'country' => 'it',
         ]);
 
-        $input = new Searchselect(name: 'country', options: TEST_OPTIONS);
+        $input = new SearchSelect(name: 'country', options: TEST_OPTIONS);
 
         expect($input->value)->toBe('it');
 
@@ -40,7 +40,7 @@ describe('Resolve initial value', function () {
         $testModel = new TestModel(['country' => 'us']);
         bindModel($testModel);
 
-        $input = new Searchselect(name: 'country', options: TEST_OPTIONS);
+        $input = new SearchSelect(name: 'country', options: TEST_OPTIONS);
 
         expect($input->value)->toBe('us');
     });
@@ -54,7 +54,7 @@ describe('Resolve initial value', function () {
             'country' => 'it',
         ]);
 
-        $input = new Searchselect(name: 'country', options: TEST_OPTIONS);
+        $input = new SearchSelect(name: 'country', options: TEST_OPTIONS);
 
         expect($input->value)->toBe('it');
     });
@@ -68,7 +68,7 @@ describe('Resolve initial value', function () {
             'country' => 'de',
         ]);
 
-        $input = new Searchselect(name: 'country', value: 'it', options: TEST_OPTIONS);
+        $input = new SearchSelect(name: 'country', value: 'it', options: TEST_OPTIONS);
 
         expect($input->value)->toBe('it');
     });
