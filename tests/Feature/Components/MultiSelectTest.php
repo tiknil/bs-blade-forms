@@ -84,6 +84,7 @@ describe('Renders correctly', function () {
         );
 
         expect($view)->assertDontSee('<label', false)
+            ->assertSee('name="countries[]"', false)
             ->and($view)->toMatchSnapshot();
 
     });
