@@ -26,9 +26,9 @@ components and Boostrap utilities.
 - **Reduced boilerplate**: Minimize repetitive code and simplify the form-building process
 - **Advanced Select Components**: Utilize `SearchSelect` and `MultiSelect` for enhanced and complex selection input
   needs, providing a better user experience.
-- **Automatic Old Input Handling**: Automatically
-  manage [old input](https://laravel.com/docs/validation#repopulating-forms) based on the field name, ensuring form
+- **Automatic Old Input Handling**: Automatically manage [old input](https://laravel.com/docs/validation#repopulating-forms) based on the field name, ensuring form
   repopulation is seamless.
+- - **Automatic Form model binding**: Automatically binds to a model and populate the form with the corrisponding field
 - **Livewire Support**: Fully integrate with Livewire by forwarding tags (e.g., `wire:model`) to the underlying
   input/select
   elements.
@@ -82,66 +82,85 @@ In your blade templates, use the provided components:
 Go from:
 
 ```html
-<label for="name" class="form-label">{{ __('user.name') }}</label>
-<input type="text"
-       class="form-control"
-       id="name"
-       name="name"
-       value="{{ old('name', $user->name) }}"
-
-/>
-
-<label for="role" class="form-label">{{ __('user.role') }}</label>
-<select name="role" id="role" class="form-select">
-    <option value="">-- Select a role --</option>
-    @foreach($roles as $key => $label)
-        <option value="{{ $key }}"
-                @selected(old('role', $user->role) === $key)
-        >
-        {{ $label }}
-        </option>
-    @endforeach
-</select>
-
-<div class="form-check">
-    <input type="checkbox"
-           class="form-check-input" 
-           value="1" 
-           name="newsletter"
-           id="newsletter" 
-           @checked(old('newsletter', $user->newsletter) === '1') />
-    <label class="form-check-label" for="newsletter">
-        Subscribe to newsletter
-    </label>
-</div>
+<form action="{{ route('users.edit', ['id' => $user->id]) }}" method="POST">
+    @csrf
+    @method('patch')
+        
+    <label for="name" class="form-label">{{ __('user.name') }}</label>
+    <input type="text"
+           class="form-control"
+           id="name"
+           name="name"
+           value="{{ old('name', $user->name) }}"
+    
+    />
+    
+    <label for="role" class="form-label">{{ __('user.role') }}</label>
+    <select name="role" id="role" class="form-select">
+        <option value="">-- Select a role --</option>
+        @foreach($roles as $key => $label)
+            <option value="{{ $key }}"
+                    @selected(old('role', $user->role) === $key)
+            >
+            {{ $label }}
+            </option>
+        @endforeach
+    </select>
+    
+    <div class="form-check">
+        <input type="checkbox"
+               class="form-check-input" 
+               value="1" 
+               name="newsletter"
+               id="newsletter" 
+               @checked(old('newsletter', $user->newsletter) === '1') />
+        <label class="form-check-label" for="newsletter">
+            Subscribe to newsletter
+        </label>
+    </div>
+</form>
 ```
 
 To:
 
 ```bladehtml
+<x-bs::form :model="$user" method="PATCH" action="{{ route('users.edit', ['id' => $user->id]) }}">
+    <x-bs::input
+        :label="__('user.name)"
+        name="name"
+    />
 
-<x-bs::input
-    :label="__('user.name)"
-    name="name"
-    :value="$user->name"
-/>
+    <x-bs::select
+        :label="__('user.role')"
+        name="role"
+        :options="$roles"
+        empty-option="-- Select a role --"
+    />
 
-<x-bs::select
-    :label="__('user.role')"
-    name="role"
-    :value="$user->role"
-    :options="$roles"
-    empty-option="-- Select a role --"
-/>
-
-<x-bs::checkbox 
-    name="newsletter" 
-    label="Subscribe to newsletter" 
-    @checked($user->newsletter) 
-/>
+    <x-bs::checkbox
+        name="newsletter"
+        label="Subscribe to newsletter" 
+    />
+</x-bs::form>
 ```
 
 ## Components
+
+#### Form
+
+Renders a form, with optional modal binding.
+
+
+```bladehtml
+
+<x-bs::form :model="$model" method="PATCH" action="{{ route(...) }}">
+...
+</x-bs::form>
+```
+
+Automatically adds `@csrf` and `@method(...)` when required.
+
+When a `model` is provided, `x-bs::` components will automatically use the model corresponding field as default value.
 
 #### SearchSelect
 
