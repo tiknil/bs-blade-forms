@@ -50,7 +50,7 @@
     z-index: 10;
 
     width: 100%;
-    height: fit-content;
+    height: auto; // fit-content doesn't work properly on Safari
 
     border: var(--cs-border-width) solid var(--cs-border-color);
     border-radius: 0 0 6px 6px;
