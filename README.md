@@ -1,5 +1,6 @@
 # Blade Form Components Library
 
+![GitHub Actions](https://github.com/tiknil/bs-blade-forms/actions/workflows/main.yml/badge.svg)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tiknil/bs-blade-forms.svg?style=flat-square)](https://packagist.org/packages/tiknil/bs-blade-forms)
 [![Total Downloads](https://img.shields.io/packagist/dt/tiknil/bs-blade-forms.svg?style=flat-square)](https://packagist.org/packages/tiknil/bs-blade-forms)
 
