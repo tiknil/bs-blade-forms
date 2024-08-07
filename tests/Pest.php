@@ -11,7 +11,7 @@
 |
 */
 
-uses(Tiknil\BsBladeForms\Tests\TestCase::class)->in('Feature');
+uses(Tiknil\BsBladeForms\Tests\TestCase::class)->in('Feature', 'Unit');
 
 afterEach(function () {
     bindModel(null);

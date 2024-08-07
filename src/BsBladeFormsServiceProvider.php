@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Tiknil\BsBladeForms\Console\PublishAssets;
 use Tiknil\BsBladeForms\Utils\ModelResolver;
+use Tiknil\BsBladeForms\Utils\OldResolver;
 
 class BsBladeFormsServiceProvider extends ServiceProvider
 {
@@ -63,5 +64,6 @@ class BsBladeFormsServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(ModelResolver::class);
+        $this->app->singleton(OldResolver::class);
     }
 }

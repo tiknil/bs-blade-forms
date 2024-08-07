@@ -3,8 +3,8 @@
 namespace Tiknil\BsBladeForms\Components;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Session;
 use Tiknil\BsBladeForms\Utils\ModelResolver;
+use Tiknil\BsBladeForms\Utils\OldResolver;
 
 abstract class BaseFormInput extends BaseComponent
 {
@@ -16,9 +16,12 @@ abstract class BaseFormInput extends BaseComponent
 
     private ModelResolver $modelResolver;
 
+    private OldResolver $oldResolver;
+
     public function __construct(string $name, ?string $oldReference = null, ?string $modelField = null)
     {
         $this->modelResolver = resolve(ModelResolver::class);
+        $this->oldResolver = resolve(OldResolver::class);
 
         $this->name = $name;
         $this->oldReference = $oldReference ?: $name;
@@ -53,6 +56,6 @@ abstract class BaseFormInput extends BaseComponent
 
     protected function loadFromOld(): mixed
     {
-        return Session::getOldInput($this->oldReference, null);
+        return $this->oldResolver->solve($this->oldReference);
     }
 }
