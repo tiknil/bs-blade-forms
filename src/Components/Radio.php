@@ -22,10 +22,6 @@ class Radio extends BaseFormInput
 
     public function loadValue(mixed $value): void
     {
-        if ($this->checked !== null) {
-            return;
-        }
-
         $value = EnumConverter::enumToValue($value);
 
         $this->checked = $value === $this->value;

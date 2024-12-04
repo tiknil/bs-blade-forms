@@ -21,25 +21,17 @@ class Input extends BaseFormInput
         public string $type = 'text'
 
     ) {
-
         $this->value = $this->parseValue($value);
-
         parent::__construct($name);
     }
 
     public function loadValue(mixed $value): void
     {
-
-        if ($this->value !== null) {
-            return;
-        }
-
         $this->value = $this->parseValue($value);
     }
 
     public function render(): View
     {
-
         return view('bs-blade-forms::input');
     }
 }

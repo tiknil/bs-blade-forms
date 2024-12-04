@@ -45,10 +45,6 @@ class MultiSelect extends BaseFormInput
 
     public function loadValue(mixed $value): void
     {
-        if ($this->value) {
-            return;
-        }
-
         if (is_a($value, Collection::class)) {
             $value = $value->toArray();
         }

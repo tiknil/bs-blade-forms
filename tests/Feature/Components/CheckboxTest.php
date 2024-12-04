@@ -31,7 +31,7 @@ describe('Resolve initial value', function () {
 
         bindModel($testModel);
 
-        $checkbox = new Checkbox(name: 'enabled');
+        $checkbox = new Checkbox(name: 'enabled', checked: false);
 
         expect($checkbox->checked)->toBeTrue();
     });
@@ -45,23 +45,9 @@ describe('Resolve initial value', function () {
             'enabled' => true,
         ]);
 
-        $checkbox = new Checkbox(name: 'enabled');
-
-        expect($checkbox->checked)->toBeTrue();
-    });
-
-    it('gives priority to specified value', function () {
-
-        $testModel = new TestModel(['enabled' => true]);
-        bindModel($testModel);
-
-        Session::flash('_old_input', [
-            'enabled' => true,
-        ]);
-
         $checkbox = new Checkbox(name: 'enabled', checked: false);
 
-        expect($checkbox->checked)->toBeFalse();
+        expect($checkbox->checked)->toBeTrue();
     });
 
 });

@@ -30,10 +30,6 @@ class Checkbox extends BaseFormInput
 
     public function loadValue(mixed $value): void
     {
-        if ($this->checked !== null) {
-            return;
-        }
-
         $this->checked = boolval($value);
     }
 

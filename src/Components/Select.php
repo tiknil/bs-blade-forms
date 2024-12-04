@@ -35,10 +35,6 @@ class Select extends BaseFormInput
 
     public function loadValue(mixed $value): void
     {
-        if ($this->value !== null) {
-            return;
-        }
-
         $this->value = $this->parseValue($value);
     }
 

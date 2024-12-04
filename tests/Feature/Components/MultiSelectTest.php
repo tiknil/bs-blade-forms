@@ -20,7 +20,6 @@ describe('Resolve initial value', function () {
         $input = new MultiSelect(name: 'countries', options: collect(TEST_OPTIONS));
 
         expect($input->options)->toEqual(TEST_OPTIONS);
-
     });
 
     it('reads old input', function () {
@@ -40,7 +39,7 @@ describe('Resolve initial value', function () {
         $testModel = new TestModel(['countries' => ['it', 'us']]);
         bindModel($testModel);
 
-        $input = new MultiSelect(name: 'countries', options: TEST_OPTIONS);
+        $input = new MultiSelect(name: 'countries', value: ['de', 'fr'], options: TEST_OPTIONS);
 
         expect($input->value)->toBe(['it', 'us']);
     });
@@ -51,26 +50,12 @@ describe('Resolve initial value', function () {
         bindModel($testModel);
 
         Session::flash('_old_input', [
-            'countries' => ['it'],
+            'countries' => ['it', 'fr'],
         ]);
 
-        $input = new MultiSelect(name: 'countries', options: TEST_OPTIONS);
+        $input = new MultiSelect(name: 'countries', value: ['de', 'fr'], options: TEST_OPTIONS);
 
-        expect($input->value)->toBe(['it']);
-    });
-
-    it('gives priority to specified value', function () {
-
-        $testModel = new TestModel(['countries' => ['us']]);
-        bindModel($testModel);
-
-        Session::flash('_old_input', [
-            'countries' => ['de'],
-        ]);
-
-        $input = new MultiSelect(name: 'countries', value: ['it'], options: TEST_OPTIONS);
-
-        expect($input->value)->toBe(['it']);
+        expect($input->value)->toBe(['it', 'fr']);
     });
 
 });

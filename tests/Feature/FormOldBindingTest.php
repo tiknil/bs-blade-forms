@@ -24,7 +24,7 @@ it('supports complex old binding on form', function () {
     $view = $this->blade(
         <<<'HTML'
             <x-bs::form method="PATCH" action="url">
-                <x-bs::input type="email" name="email" required />
+                <x-bs::input type="email" name="email" required value="test2@example.org" />
                 <x-bs::input name="hidden_field" type="password" required />
 
                 <x-bs::radio name="role" value="User" label="User" />

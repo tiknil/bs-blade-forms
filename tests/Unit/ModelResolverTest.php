@@ -10,12 +10,12 @@ beforeEach(function () {
 });
 
 test('it returns null when model is null', function () {
-    $resolver = new ModelResolver();
+    $resolver = new ModelResolver;
     expect($resolver->solve('field'))->toBeNull();
 });
 
 test('it solves for nested array data', function () {
-    $resolver = new ModelResolver();
+    $resolver = new ModelResolver;
     Form::$model = [
         'field' => [
             'name1' => [
@@ -28,7 +28,7 @@ test('it solves for nested array data', function () {
 });
 
 test('it solves for nested object data', function () {
-    $resolver = new ModelResolver();
+    $resolver = new ModelResolver;
     Form::$model = (object) [
         'field' => (object) [
             'name1' => (object) [
@@ -41,7 +41,7 @@ test('it solves for nested object data', function () {
 });
 
 test('it solves for model data correctly', function () {
-    $resolver = new ModelResolver();
+    $resolver = new ModelResolver;
     $model = Mockery::mock(Model::class);
     $model->shouldReceive('getAttribute')->with('field')->andReturn('value');
     $model->shouldReceive('getHidden')->andReturn([]);
@@ -52,7 +52,7 @@ test('it solves for model data correctly', function () {
 });
 
 test('it solves null for hidden model attribute', function () {
-    $resolver = new ModelResolver();
+    $resolver = new ModelResolver;
     $model = new TestModel(['hidden_field' => 'value']);
 
     Form::$model = $model;
@@ -61,7 +61,7 @@ test('it solves null for hidden model attribute', function () {
 });
 
 test('it solves for nested model data correctly', function () {
-    $resolver = new ModelResolver();
+    $resolver = new ModelResolver;
     $model = Mockery::mock(Model::class);
     $model->shouldReceive('getAttribute')->with('field')->andReturn(['name1' => 'value']);
     $model->shouldReceive('getHidden')->andReturn([]);
@@ -69,4 +69,28 @@ test('it solves for nested model data correctly', function () {
     Form::$model = $model;
 
     expect($resolver->solve('field[name1]'))->toEqual('value');
+});
+
+test('it solves for std object', function () {
+    $resolver = new ModelResolver;
+
+    $model = new \stdClass;
+    $model->name = 'name value';
+    $model->data['field'] = 'field value';
+
+    Form::$model = $model;
+
+    expect($resolver->solve('name'))->toEqual('name value')
+        ->and($resolver->solve('data[field]'))->toEqual('field value');
+});
+
+test('it solves to null for missing field', function () {
+    $resolver = new ModelResolver;
+
+    $model = new \stdClass;
+    $model->name = 'name value';
+
+    Form::$model = $model;
+
+    expect($resolver->solve('field'))->toBeNull();
 });

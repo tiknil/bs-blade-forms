@@ -31,7 +31,7 @@ describe('Resolve initial value', function () {
         $testModel = new TestModel(['role' => 'Admin']);
         bindModel($testModel);
 
-        $radio = new Radio(name: 'role', value: 'Admin');
+        $radio = new Radio(name: 'role', value: 'Admin', checked: false);
 
         expect($radio->checked)->toBeTrue();
     });
@@ -45,19 +45,9 @@ describe('Resolve initial value', function () {
             'role' => 'Admin',
         ]);
 
-        $radio = new Radio(name: 'role', value: 'Admin');
-
-        expect($radio->checked)->toBeTrue();
-    });
-
-    it('gives priority to specified value', function () {
-
-        $testModel = new TestModel(['role' => 'Admin']);
-        bindModel($testModel);
-
         $radio = new Radio(name: 'role', value: 'Admin', checked: false);
 
-        expect($radio->checked)->toBeFalse();
+        expect($radio->checked)->toBeTrue();
     });
 
 });

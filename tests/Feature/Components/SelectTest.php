@@ -40,7 +40,7 @@ describe('Resolve initial value', function () {
         $testModel = new TestModel(['country' => 'it']);
         bindModel($testModel);
 
-        $input = new Select(name: 'country', options: TEST_OPTIONS);
+        $input = new Select(name: 'country', value: 'de', options: TEST_OPTIONS);
 
         expect($input->value)->toBe('it');
     });
@@ -54,21 +54,7 @@ describe('Resolve initial value', function () {
             'country' => 'it',
         ]);
 
-        $input = new Select(name: 'country', options: TEST_OPTIONS);
-
-        expect($input->value)->toBe('it');
-    });
-
-    it('gives priority to specified value', function () {
-
-        $testModel = new TestModel(['country' => 'us']);
-        bindModel($testModel);
-
-        Session::flash('_old_input', [
-            'country' => 'de',
-        ]);
-
-        $input = new Select(name: 'country', value: 'it', options: TEST_OPTIONS);
+        $input = new Select(name: 'country', value: 'de', options: TEST_OPTIONS);
 
         expect($input->value)->toBe('it');
     });

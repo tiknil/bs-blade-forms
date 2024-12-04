@@ -43,7 +43,7 @@ class ModelResolver
             return $data->getAttribute($name);
         }
 
-        return $data->{$name};
+        return $data->{$name} ?? null;
     }
 
     protected function splitNameFields(string $name): mixed

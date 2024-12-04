@@ -13,6 +13,14 @@ describe('Resolve initial value', function () {
         expect($input->value)->toBeNull();
     });
 
+    it('reads direct value', function () {
+
+        $input = new Input(name: 'email', value: 'test@example.com');
+
+        expect($input->value)->toBe('test@example.com');
+
+    });
+
     it('reads old input', function () {
 
         Session::flash('_old_input', [
@@ -27,12 +35,12 @@ describe('Resolve initial value', function () {
 
     it('reads model field', function () {
 
-        $testModel = new TestModel(['email' => 'test@example.com']);
+        $testModel = new TestModel(['email' => 'test_model@example.com']);
         bindModel($testModel);
 
-        $input = new Input(name: 'email');
+        $input = new Input(name: 'email', value: 'test@example.com');
 
-        expect($input->value)->toBe('test@example.com');
+        expect($input->value)->toBe('test_model@example.com');
     });
 
     it('gives priority to old', function () {
@@ -44,23 +52,9 @@ describe('Resolve initial value', function () {
             'email' => 'test_old@example.com',
         ]);
 
-        $input = new Input(name: 'email');
-
-        expect($input->value)->toBe('test_old@example.com');
-    });
-
-    it('gives priority to specified value', function () {
-
-        $testModel = new TestModel(['email' => 'test_model@example.com']);
-        bindModel($testModel);
-
-        Session::flash('_old_input', [
-            'email' => 'test_old@example.com',
-        ]);
-
         $input = new Input(name: 'email', value: 'test@example.com');
 
-        expect($input->value)->toBe('test@example.com');
+        expect($input->value)->toBe('test_old@example.com');
     });
 
 });
