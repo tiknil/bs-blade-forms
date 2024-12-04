@@ -28,7 +28,7 @@ class Checkbox extends BaseFormInput
         parent::__construct($name);
     }
 
-    public function loadValue(mixed $value): void
+    public function load(mixed $value): void
     {
         $this->checked = boolval($value);
     }

@@ -20,7 +20,7 @@ class Radio extends BaseFormInput
         parent::__construct($name);
     }
 
-    public function loadValue(mixed $value): void
+    public function load(mixed $value): void
     {
         $value = EnumConverter::enumToValue($value);
 

@@ -6,7 +6,7 @@ use Tiknil\BsBladeForms\Utils\EnumConverter;
 
 trait WithStringValue
 {
-    public function parseValue(mixed $value): ?string
+    public function parse(mixed $value): ?string
     {
         $value = EnumConverter::enumToValue($value);
 

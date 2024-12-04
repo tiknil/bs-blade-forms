@@ -31,15 +31,15 @@ class SearchSelect extends BaseFormInput
 
         $this->setOptions($options);
 
-        $this->value = $this->parseValue($value);
+        $this->value = $this->parse($value);
 
         parent::__construct($this->name);
 
     }
 
-    public function loadValue(mixed $value): void
+    public function load(mixed $value): void
     {
-        $this->value = $this->parseValue($value);
+        $this->value = $this->parse($value);
     }
 
     public function render(): View

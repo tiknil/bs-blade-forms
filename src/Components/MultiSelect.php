@@ -37,13 +37,13 @@ class MultiSelect extends BaseFormInput
 
         $this->fieldName = "{$name}[]";
 
-        $this->loadValue($value);
+        $this->load($value);
 
         parent::__construct($name);
 
     }
 
-    public function loadValue(mixed $value): void
+    public function load(mixed $value): void
     {
         if (is_a($value, Collection::class)) {
             $value = $value->toArray();

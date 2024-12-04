@@ -35,19 +35,18 @@ abstract class BaseFormInput extends BaseComponent
 
         if ($valueToLoad !== null) {
             try {
-                $this->loadValue($valueToLoad);
+                $this->load($valueToLoad);
 
             } catch (\TypeError $e) {
                 // Wrong variable type
             }
         }
-
     }
 
     /**
      * Method called when a value is found, either from the binded model or the `old()` input
      */
-    abstract public function loadValue(mixed $value): void;
+    abstract public function load(mixed $value): void;
 
     protected function loadFromModel(): mixed
     {
