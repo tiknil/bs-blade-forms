@@ -5,7 +5,7 @@
         "tiknil",
         "bs-blade-forms"
     ],
-    "version": "0.3.0",
+    "version": "0.3.1",
     "homepage": "https://github.com/tiknil/bs-blade-forms",
     "license": "MIT",
     "type": "library",
@@ -41,7 +41,6 @@
     "scripts": {
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage-html coverage"
-
     },
     "config": {
         "sort-packages": true,
