@@ -1,4 +1,4 @@
-import { debounce, throttle } from '@/utils/dom.ts'
+import {debounce, throttle} from '@/utils/dom.ts'
 
 export class CustomSelect {
   rootEl: Element
@@ -8,6 +8,7 @@ export class CustomSelect {
   /* Dropdown elements */
   dropdown: HTMLElement
   dropdownOptions: Map<string, HTMLElement> = new Map()
+  optionsSearchText: Map<string, string> = new Map()
 
   dropdownSearch: HTMLInputElement
   dropdownSelectAllBtn: HTMLButtonElement | null = null
@@ -169,11 +170,11 @@ export class CustomSelect {
       return
     }
 
-    window['Livewire'].hook('morph.updated', ({ el }) =>
+    window['Livewire'].hook('morph.updated', ({el}) =>
       this.onLivewireUpdate(el),
     )
 
-    window['Livewire'].hook('element.init', ({ el }) =>
+    window['Livewire'].hook('element.init', ({el}) =>
       /* Timeout required because element.init is launched BEFORE wire:model takes effect */
       setTimeout(() => this.onLivewireUpdate(el), 50),
     )
@@ -223,25 +224,42 @@ export class CustomSelect {
       return
     }
 
-    const s = this.dropdownSearch.value.toLowerCase().trim()
+    let s = this.dropdownSearch.value.toLowerCase().trim()
+    if (s.length < 2) {
+      s = ''
+    }
 
     let newActive: string | null = null
 
+    const toShow: HTMLElement[] = []
+    const toHide: HTMLElement[] = []
+
     for (const [key, opt] of this.dropdownOptions) {
-      const shouldShow = s === '' || opt.innerText.toLowerCase().includes(s)
+      const shouldShow = s === '' || this.optionsSearchText.get(key)?.includes(s)
 
       if (shouldShow) {
-        opt.classList.remove('hidden')
+
+        if (opt.classList.contains('hidden')) {
+          toShow.push(opt)
+        }
 
         if (newActive === null) {
           newActive = key
         }
       } else {
-        opt.classList.add('hidden')
+        if (!opt.classList.contains('hidden')) {
+          toHide.push(opt)
+        }
       }
     }
 
-    this.setActive(newActive)
+    // Do all work in a single frame, avoiding multiple browser reflow & repaint
+    requestAnimationFrame(() => {
+      toShow.forEach(opt => opt.classList.remove('hidden'))
+      toHide.forEach(opt => opt.classList.add('hidden'))
+
+      this.setActive(newActive)
+    })
   }
 
   populateDropdown = () => {
@@ -274,12 +292,14 @@ export class CustomSelect {
       optionsWrapper.appendChild(dropdownOption)
 
       this.dropdownOptions.set(option.value, dropdownOption)
+      this.optionsSearchText.set(option.value, option.label.toLowerCase())
     })
 
     existingValues.forEach((val) => {
       this.dropdownOptions.get(val)?.remove()
 
       this.dropdownOptions.delete(val)
+      this.optionsSearchText.delete(val)
     })
   }
 
@@ -335,7 +355,7 @@ export class CustomSelect {
 
       this.dropdownOptions
         .get(key)
-        ?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+        ?.scrollIntoView({block: 'nearest', behavior: 'smooth'})
     }
 
     this.active = key
