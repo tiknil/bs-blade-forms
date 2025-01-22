@@ -2,7 +2,11 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
-## 0.3.0 - 2024-12-05
+## 0.3.2 - 2025-01-22
+
+- Direct value definition now takes precedence over model binding.
+
+## 0.3.1 - 2024-12-05
 
 - Improved performance on SearchSelect and MultiSelect with thousands of options
 
