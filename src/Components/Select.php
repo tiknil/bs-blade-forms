@@ -33,8 +33,12 @@ class Select extends BaseFormInput
 
     }
 
-    public function load(mixed $value): void
+    public function load(mixed $value, bool $override): void
     {
+        if (!$override && $this->value !== null) {
+            return;
+        }
+
         $this->value = $this->parse($value);
     }
 

@@ -20,8 +20,12 @@ class Radio extends BaseFormInput
         parent::__construct($name);
     }
 
-    public function load(mixed $value): void
+    public function load(mixed $value, bool $override): void
     {
+        if (!$override && $this->checked !== null) {
+            return;
+        }
+
         $value = EnumConverter::enumToValue($value);
 
         $this->checked = $value === $this->value;

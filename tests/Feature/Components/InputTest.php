@@ -38,7 +38,7 @@ describe('Resolve initial value', function () {
         $testModel = new TestModel(['email' => 'test_model@example.com']);
         bindModel($testModel);
 
-        $input = new Input(name: 'email', value: 'test@example.com');
+        $input = new Input(name: 'email');
 
         expect($input->value)->toBe('test_model@example.com');
     });
@@ -55,6 +55,16 @@ describe('Resolve initial value', function () {
         $input = new Input(name: 'email', value: 'test@example.com');
 
         expect($input->value)->toBe('test_old@example.com');
+    });
+
+    it('gives priority to value', function () {
+
+        $testModel = new TestModel(['email' => 'test_model@example.com']);
+        bindModel($testModel);
+
+        $input = new Input(name: 'email', value: 'test@example.com');
+
+        expect($input->value)->toBe('test@example.com');
     });
 
 });

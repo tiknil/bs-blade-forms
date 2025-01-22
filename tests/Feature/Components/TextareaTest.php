@@ -30,7 +30,7 @@ describe('Resolve initial value', function () {
         $testModel = new TestModel(['notes' => 'Lorem Ipsum']);
         bindModel($testModel);
 
-        $textarea = new Textarea(name: 'notes', value: 'Ipsum Lorem');
+        $textarea = new Textarea(name: 'notes');
 
         expect($textarea->value)->toBe('Lorem Ipsum');
     });
@@ -47,6 +47,16 @@ describe('Resolve initial value', function () {
         $textarea = new Textarea(name: 'notes', value: 'Lorem Ipsum');
 
         expect($textarea->value)->toBe('Lorem Ipsum old');
+    });
+
+    it('gives priority to value', function () {
+
+        $testModel = new TestModel(['notes' => 'Lorem Ipsum']);
+        bindModel($testModel);
+
+        $textarea = new Textarea(name: 'notes', value: 'Ipsum Lorem');
+
+        expect($textarea->value)->toBe('Ipsum Lorem');
     });
 
 });

@@ -31,7 +31,7 @@ describe('Resolve initial value', function () {
 
         bindModel($testModel);
 
-        $checkbox = new Checkbox(name: 'enabled', checked: false);
+        $checkbox = new Checkbox(name: 'enabled');
 
         expect($checkbox->checked)->toBeTrue();
     });
@@ -96,7 +96,6 @@ describe('Renders correctly', function () {
 
         $view = $this->blade(
             '<x-bs::checkbox name="enabled" />',
-            ['checked' => true]
         );
 
         expect($view)->assertSee('checked');

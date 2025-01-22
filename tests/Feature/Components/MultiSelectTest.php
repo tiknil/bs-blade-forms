@@ -39,7 +39,7 @@ describe('Resolve initial value', function () {
         $testModel = new TestModel(['countries' => ['it', 'us']]);
         bindModel($testModel);
 
-        $input = new MultiSelect(name: 'countries', value: ['de', 'fr'], options: TEST_OPTIONS);
+        $input = new MultiSelect(name: 'countries', options: TEST_OPTIONS);
 
         expect($input->value)->toBe(['it', 'us']);
     });
@@ -56,6 +56,16 @@ describe('Resolve initial value', function () {
         $input = new MultiSelect(name: 'countries', value: ['de', 'fr'], options: TEST_OPTIONS);
 
         expect($input->value)->toBe(['it', 'fr']);
+    });
+
+    it('gives priority to value', function () {
+
+        $testModel = new TestModel(['countries' => ['it', 'us']]);
+        bindModel($testModel);
+
+        $input = new MultiSelect(name: 'countries', value: ['de', 'fr'], options: TEST_OPTIONS);
+
+        expect($input->value)->toBe(['de', 'fr']);
     });
 
 });

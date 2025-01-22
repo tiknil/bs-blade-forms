@@ -28,14 +28,16 @@ abstract class BaseFormInput extends BaseComponent
         $this->modelField = $modelField ?: $name;
 
         $valueToLoad = $this->loadFromOld();
+        $override = true;
 
         if ($valueToLoad === null) {
             $valueToLoad = $this->loadFromModel();
+            $override = false;
         }
 
         if ($valueToLoad !== null) {
             try {
-                $this->load($valueToLoad);
+                $this->load($valueToLoad, $override);
 
             } catch (\TypeError $e) {
                 // Wrong variable type
@@ -46,7 +48,7 @@ abstract class BaseFormInput extends BaseComponent
     /**
      * Method called when a value is found, either from the binded model or the `old()` input
      */
-    abstract public function load(mixed $value): void;
+    abstract public function load(mixed $value, bool $override): void;
 
     protected function loadFromModel(): mixed
     {
