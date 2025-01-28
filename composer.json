@@ -5,7 +5,7 @@
         "tiknil",
         "bs-blade-forms"
     ],
-    "version": "0.3.2",
+    "version": "0.3.3",
     "homepage": "https://github.com/tiknil/bs-blade-forms",
     "license": "MIT",
     "type": "library",
