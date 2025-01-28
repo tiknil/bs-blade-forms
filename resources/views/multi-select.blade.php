@@ -7,7 +7,7 @@
 @endif
 
 <div class="ms-wrapper"
-     @if($livewire) wire:ignore.self data-livewire @endif
+     @if($livewire) wire:ignore.self data-livewire wire:key="ms-wrapper-{{ $fieldName }}" @endif
      @if(!empty($id)) id="{{ $id }}" @endif>
 
   {{--
@@ -53,7 +53,7 @@
         @endif</div>
       <div class="ss-value-label" style="display:none;"></div>
     </div>
-  </x-bs::icon-group >
+  </x-bs::icon-group>
 
   {{-- Option dropdown --}}
   <div class="ss-dropdown hidden"

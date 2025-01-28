@@ -7,7 +7,7 @@
 @endif
 
 <div class="ss-wrapper"
-     @if($livewire) wire:ignore.self data-livewire @endif
+     @if($livewire) wire:ignore.self data-livewire wire:key="ss-wrapper-{{ $name }}" @endif
      @if(!empty($id)) id="{{ $id }}" @endif>
 
   {{--
