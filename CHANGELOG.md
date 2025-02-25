@@ -2,6 +2,10 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
+## 0.3.4 - 2025-02-25
+
+- Added additional wire:key to select options because of livewire rendering issues
+
 ## 0.3.3 - 2025-01-28
 
 - Added wire:key to complex select wrappers
