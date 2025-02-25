@@ -20,7 +20,7 @@
           tabindex="-1"
           multiple
           id="{{ $fieldName }}"
-          @if($livewire) wire:key="ss-{{ $fieldName }}" @endif
+          @if($livewire) wire:key="ms-{{ $fieldName }}" @endif
           @if($required) required @endif
           {{ $attributes->whereStartsWith('wire:model') }}
           class="ss-ghost-select">
@@ -29,7 +29,7 @@
       {{ $slot }}
     @else
       @foreach($options as $key => $label)
-        <option value="{{ $key }}" @selected(in_array($key, $value))>{{ $label }}</option>
+        <option value="{{ $key }}" @selected(in_array($key, $value)) wire:key="{{$fieldName}}-{{ $key}}" >{{ $label }}</option>
       @endforeach
     @endif
 

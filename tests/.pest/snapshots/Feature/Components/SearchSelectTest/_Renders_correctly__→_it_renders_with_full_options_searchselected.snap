@@ -2,23 +2,20 @@
       Country
   </label>
 
-<div class="ss-wrapper"
-          >
+<div class="ss-wrapper"   >
 
   
-  <select name="country"
-          id="country"
-          tabindex="-1"
-                              
-          class="ss-ghost-select">
+  <select name="country" id="country" tabindex="-1"      
+    class="ss-ghost-select">
 
     <option  value="0"></option>
 
-                  <option value="it" selected>Italy</option>
-              <option value="de" >Germany</option>
-              <option value="fr" >France</option>
-              <option value="us" >United States</option>
-          
+            <option value="it" selected wire:key="country-it" >Italy</option>
+        <option value="de"  wire:key="country-de" >Germany</option>
+        <option value="fr"  wire:key="country-fr" >France</option>
+        <option value="us"  wire:key="country-us" >United States</option>
+     
+    
   </select>
 
   <div class="input-group">
@@ -27,14 +24,11 @@
             
     </span>
 
-    <div role="button"
-                  aria-label="Select something"
-         tabindex="0"
-         class="form-select ss-box"
-    >
+    <div role="button"  aria-label="Select something" tabindex="0"
+      class="form-select ss-box">
 
       <div class="text-muted ss-placeholder">
-                  Select something
+                Select something
               </div>
       <div class="ss-value-label" style="display:none;"></div>
     </div>
@@ -43,19 +37,18 @@
 
 
   
-  <div class="ss-dropdown hidden"
-         >
+  <div class="ss-dropdown hidden" >
 
     <div class="ss-dropdown-search">
       <input type="text" class="form-control form-control-sm "
-             placeholder="Search here"/>
+        placeholder="Search here" />
     </div>
 
     
     <template class="ss-option-template">
       <div class="ss-option" data-key="">
         <span></span>
-                  <i class="bi bi-x-lg ss-remove-icon"></i>
+                <i class="bi bi-x-lg ss-remove-icon"></i>
               </div>
     </template>
 

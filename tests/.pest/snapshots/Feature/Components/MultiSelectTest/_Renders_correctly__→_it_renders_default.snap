@@ -9,10 +9,10 @@
                               
           class="ss-ghost-select">
 
-                  <option value="it" >Italy</option>
-              <option value="de" >Germany</option>
-              <option value="fr" >France</option>
-              <option value="us" >United States</option>
+                  <option value="it"  wire:key="countries[]-it" >Italy</option>
+              <option value="de"  wire:key="countries[]-de" >Germany</option>
+              <option value="fr"  wire:key="countries[]-fr" >France</option>
+              <option value="us"  wire:key="countries[]-us" >United States</option>
           
   </select>
 

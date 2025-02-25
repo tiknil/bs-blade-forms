@@ -9,13 +9,13 @@
     </span>
 
     <select id="country" name="country" class="form-select">
-          <option value="">-- Select --</option>
+        <option value="" wire:key="country-empty">-- Select --</option>
     
-                  <option value="it" selected>Italy</option>
-              <option value="de" >Germany</option>
-              <option value="fr" >France</option>
-              <option value="us" >United States</option>
-            </select>
+            <option value="it" selected wire:key="country-it" >Italy</option>
+        <option value="de"  wire:key="country-de" >Germany</option>
+        <option value="fr"  wire:key="country-fr" >France</option>
+        <option value="us"  wire:key="country-us" >United States</option>
+          </select>
   </div>
 
 
