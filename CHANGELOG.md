@@ -2,6 +2,11 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
+
+## 0.4.0- 2025-03-10
+
+- Bump dependencies for Laravel 12
+
 ## 0.3.4 - 2025-02-25
 
 - Added additional wire:key to select options because of livewire rendering issues
