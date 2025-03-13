@@ -1,8 +1,12 @@
 <form method="POST" action="url">
   <input type="hidden" name="_token" value="" autocomplete="off">  <input type="hidden" name="_method" value="PATCH">
-  <input type="email" id="email" name="email" value="test@example.org" class="form-control" required="required" />
+  <div >
+    <input type="email" id="email" name="email" value="test@example.org" class="form-control" required="required" />
+</div>
 
+    <div >
     <input type="password" id="hidden_field" name="hidden_field" value="" class="form-control" required="required" />
+</div>
 
 
     <div class="form-check">
@@ -46,7 +50,8 @@
     
   </select>
 
-  <div role="button"  aria-label="" tabindex="0"
+  <div wire:ignore="">
+    <div role="button" aria-label="" tabindex="0"
       class="form-select ss-box">
 
       <div class="text-muted ss-placeholder">
@@ -54,6 +59,7 @@
               </div>
       <div class="ss-value-label" style="display:none;"></div>
     </div>
+</div>
 
 
   
@@ -81,15 +87,25 @@
 
   </div>
 </div>
+    <div >
     <input type="text" id="address[city]" name="address[city]" value="Pedrengo" class="form-control" />
+</div>
 
+    <div >
     <input type="text" id="address[zipCode]" name="address[zipCode]" value="24066" class="form-control" />
+</div>
 
+    <div >
     <input type="text" id="address[province]" name="address[province]" value="BG" class="form-control" />
+</div>
 
+    <div >
     <input type="text" id="address[street]" name="address[street]" value="Viale Kennedy" class="form-control" />
+</div>
 
+    <div >
     <input type="number" id="address[number]" name="address[number]" value="21" class="form-control" />
+</div>
 
 
     <div class="ms-wrapper"
@@ -110,8 +126,9 @@
           
   </select>
 
-  <div role="button"
-                  aria-label=""
+  <div wire:ignore="">
+    <div role="button"
+         aria-label=""
          tabindex="0"
          class="form-select ss-box"
     >
@@ -121,6 +138,7 @@
         </div>
       <div class="ss-value-label" style="display:none;"></div>
     </div>
+</div>
 
 
   

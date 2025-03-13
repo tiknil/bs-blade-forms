@@ -2,7 +2,8 @@
       Country
   </label>
 
-<div class="input-group">
+<div >
+    <div class="input-group">
     <span class="input-group-text">
               <i class="bi bi-map"></i>
             
@@ -17,5 +18,5 @@
         <option value="us"  wire:key="country-us" >United States</option>
           </select>
   </div>
-
+</div>
 

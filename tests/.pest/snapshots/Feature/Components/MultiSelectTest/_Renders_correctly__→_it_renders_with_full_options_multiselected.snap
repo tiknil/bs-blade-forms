@@ -20,14 +20,15 @@
           
   </select>
 
-  <div class="input-group">
+  <div wire:ignore="">
+    <div class="input-group">
     <span class="input-group-text">
               <i class="bi bi-map"></i>
             
     </span>
 
     <div role="button"
-                  aria-label="Select something"
+         aria-label="Select something"
          tabindex="0"
          class="form-select ss-box"
     >
@@ -38,7 +39,7 @@
       <div class="ss-value-label" style="display:none;"></div>
     </div>
   </div>
-
+</div>
 
 
   

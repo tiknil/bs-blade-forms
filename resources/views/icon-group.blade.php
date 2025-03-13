@@ -1,4 +1,5 @@
-@if($iconClass || $iconText)
+<div {{ $attributes->except(['icon-class', 'icon-text']) }}>
+  @if($iconClass || $iconText)
   <div class="input-group">
     <span class="input-group-text">
       @if($iconClass)
@@ -9,8 +10,8 @@
 
     {{ $slot }}
   </div>
-
 @else
   {{ $slot }}
 @endif
+</div>
 

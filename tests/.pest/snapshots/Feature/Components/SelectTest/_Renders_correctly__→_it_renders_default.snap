@@ -1,8 +1,10 @@
-<select id="country" name="country" class="form-select">
+<div >
+    <select id="country" name="country" class="form-select">
     
             <option value="it"  wire:key="country-it" >Italy</option>
         <option value="de"  wire:key="country-de" >Germany</option>
         <option value="fr"  wire:key="country-fr" >France</option>
         <option value="us"  wire:key="country-us" >United States</option>
           </select>
+</div>
 

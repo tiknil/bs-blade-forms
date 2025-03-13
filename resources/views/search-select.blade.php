@@ -31,9 +31,9 @@
 
   </select>
 
-  <x-bs::icon-group icon-class="{{ $icon }}">
+  <x-bs::icon-group icon-class="{{ $icon }}" wire:ignore>
     {{-- The element shown in the UI as if it's the actual select element --}}
-    <div role="button" @if($livewire) wire:ignore @endif aria-label="{{ $placeholder }}" tabindex="0"
+    <div role="button" aria-label="{{ $placeholder }}" tabindex="0"
       class="form-select ss-box">
 
       <div class="text-muted ss-placeholder">

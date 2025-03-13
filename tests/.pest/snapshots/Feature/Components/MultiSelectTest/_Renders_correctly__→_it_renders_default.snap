@@ -16,8 +16,9 @@
           
   </select>
 
-  <div role="button"
-                  aria-label=""
+  <div wire:ignore="">
+    <div role="button"
+         aria-label=""
          tabindex="0"
          class="form-select ss-box"
     >
@@ -27,6 +28,7 @@
         </div>
       <div class="ss-value-label" style="display:none;"></div>
     </div>
+</div>
 
 
   

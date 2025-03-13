@@ -1,4 +1,3 @@
-
 @if(!empty($label))
   <x-bs::label name="{{ $name }}">
     {{ $label }}

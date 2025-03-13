@@ -2,7 +2,8 @@
       Email
   </label>
 
-<div class="input-group">
+<div >
+    <div class="input-group">
     <span class="input-group-text">
               <i class="bi bi-envelope"></i>
             
@@ -10,5 +11,5 @@
 
     <input type="email" id="email" name="email" value="test@example.org" class="form-control" required="required" />
   </div>
-
+</div>
 

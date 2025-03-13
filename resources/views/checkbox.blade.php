@@ -1,4 +1,3 @@
-
 <div class="form-check">
   @if($sendFalseValue)
     {{-- Trick per fare in modo che, anche quando il checkbox NON è selezionato, venga comunque inviato il parametro
