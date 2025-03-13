@@ -2,6 +2,9 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
+## 0.4.1 - 2025-03-13
+
+- fix: solved livewire rendering issue on searchselect and multiselect
 
 ## 0.4.0- 2025-03-10
 
