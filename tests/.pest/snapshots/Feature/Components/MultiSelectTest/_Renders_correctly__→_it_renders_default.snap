@@ -1,5 +1,5 @@
 <div class="ms-wrapper"
-          >
+           >
 
   
   <select name="countries[]"
@@ -40,19 +40,19 @@
       <input type="text" class="form-control form-control-sm"
              autocomplete="off"
              placeholder="bs-blade-forms::components.custom-select.search-placeholder"/>
+      
+              <button class="btn btn-light ss-select-all"
+                type="button"
+                title="bs-blade-forms::components.custom-select.select-all">
+          <i class="bi bi-check2-all"></i>
+        </button>
 
-      <button class="btn btn-light ss-select-all"
-              type="button"
-              title="bs-blade-forms::components.custom-select.select-all">
-        <i class="bi bi-check2-all"></i>
-      </button>
-
-      <button class="btn btn-light ss-unselect-all"
-              type="button"
-              title="bs-blade-forms::components.custom-select.unselect-all">
-        <i class="bi bi-dash-square-dotted"></i>
-      </button>
-    </div>
+        <button class="btn btn-light ss-unselect-all"
+                type="button"
+                title="bs-blade-forms::components.custom-select.unselect-all">
+          <i class="bi bi-dash-square-dotted"></i>
+        </button>
+          </div>
 
     
     <template class="ss-option-template">

@@ -26,7 +26,9 @@ class SearchSelect extends BaseFormInput
 
         public bool $allowClear = false,
         public string $emptyValue = '',
-        public string $searchPlaceholder = ''
+        public string $searchPlaceholder = '',
+
+        public ?string $fetchUrl = null,
     ) {
 
         $this->setOptions($options);

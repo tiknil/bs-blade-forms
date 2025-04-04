@@ -123,4 +123,14 @@ describe('Renders correctly', function () {
         expect($view)->assertSee('<option value="de" selected', false);
     });
 
+    it('renders with fetch url', function () {
+
+        $view = $this->blade(
+            '<x-bs::search-select name="country" :options="$options" fetch-url="https://fetch.url" />',
+            ['options' => TEST_OPTIONS]
+        );
+
+        expect($view)->assertSee('data-fetchurl="https://fetch.url"', false);
+
+    });
 });

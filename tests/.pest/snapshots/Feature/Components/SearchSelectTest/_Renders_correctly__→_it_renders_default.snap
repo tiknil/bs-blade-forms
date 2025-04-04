@@ -1,7 +1,8 @@
-<div class="ss-wrapper"   >
+<div class="ss-wrapper"    >
 
   
-  <select name="country" id="country" tabindex="-1"      
+  <select name="country" id="country" tabindex="-1" 
+      
     class="ss-ghost-select">
 
     <option selected value=""></option>

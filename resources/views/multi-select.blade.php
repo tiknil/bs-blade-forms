@@ -8,7 +8,7 @@
 
 <div class="ms-wrapper"
      @if($livewire) wire:ignore.self data-livewire wire:key="ms-wrapper-{{ $fieldName }}" @endif
-     @if(!empty($id)) id="{{ $id }}" @endif>
+     @if(!empty($id)) id="{{ $id }}" @endif @if(!empty($fetchUrl)) data-fetchurl="{{ $fetchUrl }}" @endif>
 
   {{--
     The actual select element, hidden in the UI but required for easier integration with the browser:
@@ -64,18 +64,20 @@
       <input type="text" class="form-control form-control-sm"
              autocomplete="off"
              placeholder="{{ $searchPlaceholder ?: __('bs-blade-forms::components.custom-select.search-placeholder') }}"/>
+      
+      @if($selectButtons)
+        <button class="btn btn-light ss-select-all"
+                type="button"
+                title="{{ __('bs-blade-forms::components.custom-select.select-all') }}">
+          <i class="{{ config('bs-blade-forms.icons.select-all') }}"></i>
+        </button>
 
-      <button class="btn btn-light ss-select-all"
-              type="button"
-              title="{{ __('bs-blade-forms::components.custom-select.select-all') }}">
-        <i class="{{ config('bs-blade-forms.icons.select-all') }}"></i>
-      </button>
-
-      <button class="btn btn-light ss-unselect-all"
-              type="button"
-              title="{{ __('bs-blade-forms::components.custom-select.unselect-all') }}">
-        <i class="{{ config('bs-blade-forms.icons.unselect-all') }}"></i>
-      </button>
+        <button class="btn btn-light ss-unselect-all"
+                type="button"
+                title="{{ __('bs-blade-forms::components.custom-select.unselect-all') }}">
+          <i class="{{ config('bs-blade-forms.icons.unselect-all') }}"></i>
+        </button>
+      @endif
     </div>
 
     {{-- This element is cloned by JS to render an option --}}

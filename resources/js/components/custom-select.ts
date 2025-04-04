@@ -1,9 +1,12 @@
-import {debounce, throttle} from '@/utils/dom.ts'
+import { debounce, throttle } from '@/utils/dom.ts'
 
 export class CustomSelect {
   rootEl: Element
 
   multiple: boolean
+
+  fetchUrl: string | null = null
+  private fetchAbortController: AbortController | null = null
 
   /* Dropdown elements */
   dropdown: HTMLElement
@@ -35,6 +38,8 @@ export class CustomSelect {
 
   constructor(rootEl: Element, multiple: boolean) {
     this.multiple = multiple
+
+    this.fetchUrl = rootEl.getAttribute('data-fetchurl')
 
     this.rootEl = rootEl
 
@@ -114,7 +119,10 @@ export class CustomSelect {
 
     this.dropdownSearch?.addEventListener(
       'input',
-      debounce((_e) => this.search(), 250),
+      debounce((_e) => {
+        this.search()
+        this.fetchOptions()
+      }, 250),
     )
 
     this.dropdownSearch?.addEventListener('keydown', (e) => {
@@ -148,8 +156,8 @@ export class CustomSelect {
     )
 
     this.update()
-
     this.initLivewire()
+    this.fetchOptions()
   }
 
   initLivewire = () => {
@@ -170,11 +178,11 @@ export class CustomSelect {
       return
     }
 
-    window['Livewire'].hook('morph.updated', ({el}) =>
+    window['Livewire'].hook('morph.updated', ({ el }) =>
       this.onLivewireUpdate(el),
     )
 
-    window['Livewire'].hook('element.init', ({el}) =>
+    window['Livewire'].hook('element.init', ({ el }) =>
       /* Timeout required because element.init is launched BEFORE wire:model takes effect */
       setTimeout(() => this.onLivewireUpdate(el), 50),
     )
@@ -198,17 +206,12 @@ export class CustomSelect {
     this.dropdown.classList.remove('hidden')
     setTimeout(() => this.dropdownSearch?.focus(), 25)
 
-    this.setActive(this.dropdownOptions.keys().next().value)
+    this.setActive(this.dropdownOptions.keys().next().value ?? null)
   }
 
   close = (withFocus: boolean = true) => {
     this.isOpen = false
     this.dropdown.classList.add('hidden')
-
-    if (this.dropdownSearch) {
-      this.dropdownSearch.value = ''
-      this.dropdownSearch.dispatchEvent(new Event('input'))
-    }
 
     if (withFocus) {
       this.uiBox.focus()
@@ -219,8 +222,90 @@ export class CustomSelect {
     this.isOpen ? this.close() : this.open()
   }
 
+  fetchOptions = async () => {
+    if (!this.fetchUrl) {
+      return
+    }
+
+    if (this.fetchAbortController) {
+      this.fetchAbortController.abort() // Cancel the previous fetch
+    }
+
+    this.fetchAbortController = new AbortController() // Create a new AbortController
+    const signal = this.fetchAbortController.signal // Get the AbortSignal
+
+    let url = new URL(this.fetchUrl, window.location.origin) // Use URL constructor to handle existing params
+    const searchString = this.dropdownSearch?.value.trim()
+
+    if (searchString) {
+      url.searchParams.append('q', searchString)
+    }
+
+    this.dropdown.classList.add('loading')
+
+    try {
+      const response = await fetch(url.toString(), { signal })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+
+      const data: { [key: string]: string } = await response.json() // Type assertion for the response
+
+      // Clear existing options (except the empty value)
+      const emptyValue = this.emptyValue // Save it before removing the HTML
+
+      const selectedOptions = new Map<string, string>()
+
+      // Remove all options aside from the empty one, and keep track of the selected ones
+      for (const optEl of this.select.options) {
+        if (optEl.value === emptyValue) continue
+        if (optEl.selected) selectedOptions.set(optEl.value, optEl.innerText)
+      }
+
+      this.select.innerHTML = ''
+      if (!this.multiple) {
+        const emptyOption = document.createElement('option')
+        emptyOption.value = emptyValue
+        this.select.appendChild(emptyOption)
+      }
+
+      // Add the fetched options
+      for (const valueKey in data) {
+        const value = valueKey.toString()
+        const optEl = document.createElement('option')
+        optEl.value = value
+        optEl.innerText = data[value] // Ensure innerText is set
+        if (selectedOptions.has(value)) {
+          optEl.selected = true
+          selectedOptions.delete(value)
+        }
+        this.select.appendChild(optEl)
+      }
+
+      // If there are some selectedOptions not available anymore, we still need to add them to the select element or it would lose the reference
+      for (const [value, label] of selectedOptions) {
+        const optEl = document.createElement('option')
+        optEl.value = value
+        optEl.innerText = label // Ensure innerText is set
+        optEl.selected = true
+        optEl.setAttribute('data-hidden', 'true') // Those options should be hidden in the dropdown
+        this.select.appendChild(optEl)
+      }
+
+      this.populateDropdown() // Update the dropdown UI
+      this.update() // Update the selected value display
+    } catch (error) {
+      console.error('[SearchSelect] Error fetching options:', error)
+      //  Optionally, display an error message to the user
+    } finally {
+      this.dropdown.classList.remove('loading')
+      this.fetchAbortController = null
+    }
+  }
+
   search = () => {
-    if (!this.dropdownSearch) {
+    if (!this.dropdownSearch || this.fetchUrl !== null) {
       return
     }
 
@@ -235,10 +320,10 @@ export class CustomSelect {
     const toHide: HTMLElement[] = []
 
     for (const [key, opt] of this.dropdownOptions) {
-      const shouldShow = s === '' || this.optionsSearchText.get(key)?.includes(s)
+      const shouldShow =
+        s === '' || this.optionsSearchText.get(key)?.includes(s)
 
       if (shouldShow) {
-
         if (opt.classList.contains('hidden')) {
           toShow.push(opt)
         }
@@ -255,8 +340,8 @@ export class CustomSelect {
 
     // Do all work in a single frame, avoiding multiple browser reflow & repaint
     requestAnimationFrame(() => {
-      toShow.forEach(opt => opt.classList.remove('hidden'))
-      toHide.forEach(opt => opt.classList.add('hidden'))
+      toShow.forEach((opt) => opt.classList.remove('hidden'))
+      toHide.forEach((opt) => opt.classList.add('hidden'))
 
       this.setActive(newActive)
     })
@@ -271,30 +356,45 @@ export class CustomSelect {
 
     const optionsWrapper = this.dropdown.querySelector('.ss-options')!
 
-    this.select.querySelectorAll('option').forEach((option) => {
-      if (option.value === this.emptyValue) return
+    for (const optEl of this.select.options) {
+      if (optEl.value === this.emptyValue) continue
 
-      if (this.dropdownOptions.has(option.value)) {
-        existingValues.delete(option.value)
+      // For each options in the root select element, add the equivalent option in the dropdown
 
-        this.dropdownOptions
-          .get(option.value)!
-          .querySelector('span')!.innerText = option.innerText
-        return
+      // To improve performance, do not recreate element if it already exists
+      if (this.dropdownOptions.has(optEl.value)) {
+        existingValues.delete(optEl.value)
+
+        const dropdownOption = this.dropdownOptions.get(optEl.value)!
+        dropdownOption.querySelector('span')!.innerText = optEl.innerText
+
+        if (optEl.hasAttribute('data-hidden')) {
+          dropdownOption.classList.add('hidden')
+        } else {
+          dropdownOption.classList.remove('hidden')
+        }
+        continue
       }
 
       const dropdownOption = (template.content.cloneNode(true) as HTMLElement)
         .firstElementChild as HTMLElement
 
-      dropdownOption.setAttribute('data-key', option.value)
-      dropdownOption.querySelector('span')!.innerText = option.label
+      dropdownOption.setAttribute('data-key', optEl.value)
+      dropdownOption.querySelector('span')!.innerText = optEl.label
+
+      if (optEl.hasAttribute('data-hidden')) {
+        dropdownOption.classList.add('hidden')
+      } else {
+        dropdownOption.classList.remove('hidden')
+      }
 
       optionsWrapper.appendChild(dropdownOption)
 
-      this.dropdownOptions.set(option.value, dropdownOption)
-      this.optionsSearchText.set(option.value, option.label.toLowerCase())
-    })
+      this.dropdownOptions.set(optEl.value, dropdownOption)
+      this.optionsSearchText.set(optEl.value, optEl.label.toLowerCase())
+    }
 
+    // Existing values not removed at the previous step are no longer available, we can remove them
     existingValues.forEach((val) => {
       this.dropdownOptions.get(val)?.remove()
 
@@ -355,7 +455,7 @@ export class CustomSelect {
 
       this.dropdownOptions
         .get(key)
-        ?.scrollIntoView({block: 'nearest', behavior: 'smooth'})
+        ?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
     }
 
     this.active = key

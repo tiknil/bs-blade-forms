@@ -26,8 +26,15 @@ class MultiSelect extends BaseFormInput
 
         array|Collection $options = [],
         public string $searchPlaceholder = '',
+        public bool $selectButtons = true,
+
+        public ?string $fetchUrl = null,
 
     ) {
+
+        if ($this->fetchUrl !== null) {
+            $this->selectButtons = false; // Not all options are shown, so buttons do not make sense and are confusing
+        }
 
         $this->setOptions($options);
 

@@ -125,4 +125,17 @@ describe('Renders correctly', function () {
         expect($view)->assertSee('<option value="de" selected', false);
     });
 
+    it('renders with fetch url', function () {
+
+        $view = $this->blade(
+            '<x-bs::multi-select name="countries" :options="$options" fetch-url="https://fetch.url"/>',
+            ['options' => TEST_OPTIONS]
+        );
+
+        expect($view)->assertSee('data-fetchurl="https://fetch.url"', false)
+            ->assertDontSee('<button class="btn btn-light ss-select-all"')
+            ->assertDontSee('<button class="btn btn-light ss-unselect-all"');
+
+    });
+
 });

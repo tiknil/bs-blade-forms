@@ -7,7 +7,7 @@
 @endif
 
 <div class="ss-wrapper" @if($livewire) wire:ignore.self data-livewire wire:key="ss-wrapper-{{ $name }}" @endif
-  @if(!empty($id)) id="{{ $id }}" @endif>
+  @if(!empty($id)) id="{{ $id }}" @endif @if(!empty($fetchUrl)) data-fetchurl="{{ $fetchUrl }}" @endif>
 
   {{--
   The actual select element, hidden in the UI but required for easier integration with the browser:
@@ -15,8 +15,8 @@
   * Browser automatic validation for missing data
   * Livewire attributes work (e.g. wire:model)
   --}}
-  <select name="{{ $name }}" id="{{ $name }}" tabindex="-1" @if($livewire) wire:key="ss-{{ $name }}" @endif
-    @if($required) required @endif {{ $attributes->whereStartsWith('wire:model') }}
+  <select name="{{ $name }}" id="{{ $name }}" tabindex="-1" 
+    @if($livewire) wire:key="ss-{{ $name }}" @endif @if($required) required @endif {{ $attributes->whereStartsWith('wire:model') }}
     class="ss-ghost-select">
 
     <option @selected(($value ?? $emptyValue)==$emptyValue) value="{{ $emptyValue }}"></option>
