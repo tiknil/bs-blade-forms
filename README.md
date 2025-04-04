@@ -187,6 +187,7 @@ Renders a single selection element with a research bar for filtering the options
 |--------------------|-------------------|--------------------------------------------------------------------------------|
 | name               | string            | *Required*. Name of the select element                                         |
 | options            | array, Collection | The options to display on the select.                                          |
+| fetch-url          | string            | An url to fetch for available options (to use with big data). The library will add a `q` querystring param with the searched string. Response should be a json in the `{ [value]: [label] }` format|
 | value              | string, int       | The initial selected value                                                     |                                      |
 | required           | bool              | Set the select element as required (form can't be submitted without selection) |                                      |
 | placeholder        | string            | Element placeholder when no option is selected                                 |
@@ -220,12 +221,14 @@ Renders a multiple selection element with a research bar for filtering the optio
 |--------------------|-------------------|--------------------------------------------------------------------------------|
 | name               | string            | *Required*. Name of the select element                                         |
 | options            | array, Collection | The options to display on the select.                                          |
-| value              | array             | The initial selected values                                                    |                                      |
-| required           | bool              | Set the select element as required (form can't be submitted without selection) |                                      |
+| fetch-url          | string            | An url to fetch for available options (to use with big data). The library will add a `q` querystring param with the searched string. Response should be a json in the `{ [value]: [label] }` format|
+| value              | array             | The initial selected values                                                    |
+| required           | bool              | Set the select element as required (form can't be submitted without selection) |
 | placeholder        | string            | Element placeholder when no option is selected                                 |
 | label              | string            | If present, renders a `Label` above the element                                |
 | icon               | string            | If present, renders an `IconGroup` around the element                          |
 | search-placeholder | string            | The placeholder of the search input                                            |
+| select-buttons     | bool              | Whether or not to show "select all" and "unselect all" buttons (default true)  |
 | *                  |                   | Additional attributes will be forwarded to the underlying element.             |
 
 #### Select

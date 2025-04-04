@@ -2,6 +2,11 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
+
+## 0.5.0 - 2025-04-04
+
+- feat: support for option fetching from url in search-select and multi-select
+
 ## 0.4.1 - 2025-03-13
 
 - fix: solved livewire rendering issue on searchselect and multiselect
