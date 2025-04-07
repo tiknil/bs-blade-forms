@@ -78,13 +78,6 @@ export class CustomSelect {
   init = () => {
     this.populateDropdown()
 
-    for (const [key, opt] of this.dropdownOptions) {
-      opt.addEventListener(
-        'mousemove',
-        throttle((e) => (key !== this.active ? this.setActive(key) : null), 25),
-      )
-    }
-
     this.uiBox.addEventListener('click', () => this.toggle())
 
     document.addEventListener('click', (e) => {
@@ -390,6 +383,8 @@ export class CustomSelect {
 
       optionsWrapper.appendChild(dropdownOption)
 
+      this.onDropdownOptionCreated(dropdownOption, optEl.value)
+
       this.dropdownOptions.set(optEl.value, dropdownOption)
       this.optionsSearchText.set(optEl.value, optEl.label.toLowerCase())
     }
@@ -401,6 +396,13 @@ export class CustomSelect {
       this.dropdownOptions.delete(val)
       this.optionsSearchText.delete(val)
     })
+  }
+
+  onDropdownOptionCreated = (opt: HTMLElement, key: string) => {
+    opt.addEventListener(
+      'mousemove',
+      throttle((e) => (key !== this.active ? this.setActive(key) : null), 25),
+    )
   }
 
   onOptionSelected = (key: string | null) => {
