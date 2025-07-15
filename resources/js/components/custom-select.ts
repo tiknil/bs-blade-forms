@@ -17,10 +17,10 @@ export class CustomSelect {
   dropdownSelectAllBtn: HTMLButtonElement | null = null
   dropdownUnselectAllBtn: HTMLButtonElement | null = null
 
-  /* UI base elements */
-  uiBox: HTMLElement
-  placeholder: HTMLSpanElement
-  valueLabel: HTMLSpanElement
+  /* UI base elements, null for autocomplete */
+  uiBox: HTMLElement | null
+  placeholder: HTMLSpanElement | null
+  valueLabel: HTMLSpanElement | null
 
   // Select element, hidden from the UI
   select: HTMLSelectElement
@@ -36,6 +36,10 @@ export class CustomSelect {
       : (this.select.firstElementChild as HTMLOptionElement).value
   }
 
+  get searched(): string {
+    return this.dropdownSearch?.value ?? ''
+  }
+
   constructor(rootEl: Element, multiple: boolean) {
     this.multiple = multiple
 
@@ -43,28 +47,26 @@ export class CustomSelect {
 
     this.rootEl = rootEl
 
-    this.dropdown = rootEl.querySelector('.ss-dropdown')!
+    this.dropdown = rootEl.querySelector(`.ss-dropdown`)!
     this.dropdownSearch = this.dropdown.querySelector(
-      '.ss-dropdown-search input',
+      `.ss-dropdown-search input`,
     )!
 
     this.dropdownSelectAllBtn = this.dropdown.querySelector(
-      '.ss-dropdown-search .ss-select-all',
+      `.ss-dropdown-search .ss-select-all`,
     )
     this.dropdownUnselectAllBtn = this.dropdown.querySelector(
-      '.ss-dropdown-search .ss-unselect-all',
+      `.ss-dropdown-search .ss-unselect-all`,
     )
 
-    this.uiBox = rootEl.querySelector('.ss-box')!
+    this.uiBox = rootEl.querySelector(`.ss-box`)!
 
-    this.placeholder = this.uiBox.querySelector('.ss-placeholder')!
-    this.valueLabel = this.uiBox.querySelector('.ss-value-label')!
+    this.placeholder = this.uiBox?.querySelector(`.ss-placeholder`) ?? null
+    this.valueLabel = this.uiBox?.querySelector(`.ss-value-label`) ?? null
 
-    this.select = rootEl.querySelector('.ss-ghost-select')!
+    this.select = rootEl.querySelector(`.ss-ghost-select`)!
 
     this.current = this.calcCurrent()
-
-    this.init()
   }
 
   calcCurrent = (): string | string[] => {
@@ -78,7 +80,7 @@ export class CustomSelect {
   init = () => {
     this.populateDropdown()
 
-    this.uiBox.addEventListener('click', () => this.toggle())
+    this.uiBox?.addEventListener('click', () => this.toggle())
 
     document.addEventListener('click', (e) => {
       if (!this.rootEl.contains(e.target as Node)) {
@@ -94,6 +96,7 @@ export class CustomSelect {
 
     document.addEventListener('keydown', (e) => {
       if (e.key === ' ' && this.uiBox === document.activeElement) {
+        // You can open the select dropdown with space when the visible element has focus
         this.toggle()
       }
 
@@ -127,12 +130,12 @@ export class CustomSelect {
     this.dropdown.addEventListener('click', (event) => {
       const target = event.target as HTMLElement
 
-      if (target.classList.contains('ss-remove-icon')) {
+      if (target.classList.contains(`ss-remove-icon`)) {
         this.onOptionSelected(this.emptyValue)
         return
       }
 
-      const option = target.closest('.ss-option')
+      const option = target.closest(`.ss-option`)
 
       if (option !== null) {
         this.onOptionSelected(option.getAttribute('data-key'))
@@ -197,9 +200,15 @@ export class CustomSelect {
   open = () => {
     this.isOpen = true
     this.dropdown.classList.remove('hidden')
-    setTimeout(() => this.dropdownSearch?.focus(), 25)
 
     this.setActive(this.dropdownOptions.keys().next().value ?? null)
+
+    this.onOpen()
+  }
+
+  onOpen = () => {
+    // useful for child override
+    setTimeout(() => this.dropdownSearch?.focus(), 25)
   }
 
   close = (withFocus: boolean = true) => {
@@ -207,9 +216,13 @@ export class CustomSelect {
     this.dropdown.classList.add('hidden')
 
     if (withFocus) {
-      this.uiBox.focus()
+      this.uiBox?.focus()
     }
+
+    this.onClose()
   }
+
+  onClose = () => {} // useful for child override
 
   toggle = () => {
     this.isOpen ? this.close() : this.open()
@@ -228,7 +241,7 @@ export class CustomSelect {
     const signal = this.fetchAbortController.signal // Get the AbortSignal
 
     let url = new URL(this.fetchUrl, window.location.origin) // Use URL constructor to handle existing params
-    const searchString = this.dropdownSearch?.value.trim()
+    const searchString = this.searched.trim()
 
     if (searchString) {
       url.searchParams.append('q', searchString)
@@ -287,7 +300,6 @@ export class CustomSelect {
       }
 
       this.populateDropdown() // Update the dropdown UI
-      this.update() // Update the selected value display
     } catch (error) {
       console.error('[SearchSelect] Error fetching options:', error)
       //  Optionally, display an error message to the user
@@ -298,11 +310,11 @@ export class CustomSelect {
   }
 
   search = () => {
-    if (!this.dropdownSearch || this.fetchUrl !== null) {
+    if (this.fetchUrl !== null) {
       return
     }
 
-    let s = this.dropdownSearch.value.toLowerCase().trim()
+    let s = this.searched.toLowerCase().trim()
     if (s.length < 2) {
       s = ''
     }
@@ -344,10 +356,10 @@ export class CustomSelect {
     const existingValues = new Set(this.dropdownOptions.keys())
 
     const template = this.rootEl.querySelector(
-      '.ss-option-template',
+      `.ss-option-template`,
     ) as HTMLTemplateElement
 
-    const optionsWrapper = this.dropdown.querySelector('.ss-options')!
+    const optionsWrapper = this.dropdown.querySelector(`.ss-options`)!
 
     for (const optEl of this.select.options) {
       if (optEl.value === this.emptyValue) continue
@@ -508,21 +520,14 @@ export class CustomSelect {
       }
     }
 
-    if (labels.length > 0) {
-      this.valueLabel.innerHTML = labels.join(', ')
-      this.valueLabel.style.display = 'block'
-      this.placeholder.style.display = 'none'
-    } else {
-      this.placeholder.style.display = 'block'
-      this.valueLabel.style.display = 'none'
-    }
+    this.setPreview(labels.join(', '))
   }
 
   updateSingle = () => {
     this.current = this.calcCurrent() as string
 
     this.dropdown
-      .querySelectorAll('.ss-option.selected')
+      .querySelectorAll(`.ss-option.selected`)
       .forEach((opt) => opt.classList.remove('selected'))
 
     let label = ''
@@ -535,6 +540,16 @@ export class CustomSelect {
 
         label = dropdownOpt.innerText ?? ''
       }
+    }
+
+    this.setPreview(label.trim())
+  }
+
+  setPreview(label: string) {
+    if (this.valueLabel === null || this.placeholder === null) {
+      // Autocomplete override this methods, this check is for typescript
+      console.error('Should not set preview here without valueLabel')
+      return
     }
 
     if (label !== '') {

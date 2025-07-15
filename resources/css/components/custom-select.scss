@@ -1,5 +1,6 @@
 .ss-wrapper,
-.ms-wrapper {
+.ms-wrapper,
+.ac-wrapper {
   --cs-active-color: var(--bs-primary-bg-subtle, #cfe2ff);
   --cs-selected-color: var(--bs-gray-200, #e9ecef);
 
@@ -127,5 +128,12 @@
         background-color: var(--cs-active-color);
       }
     }
+  }
+}
+
+.ac-wrapper {
+  .ss-dropdown {
+    border-radius: 6px;
+    top: 100%;
   }
 }

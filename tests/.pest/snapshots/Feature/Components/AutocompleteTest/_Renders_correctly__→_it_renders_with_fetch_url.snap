@@ -1,0 +1,36 @@
+<div class="ac-wrapper"     data-fetchurl="https://fetch.url" >
+
+  
+  <select name="country" id="country" tabindex="-1" 
+      
+    class="ss-ghost-select">
+
+    <option selected value=""></option>
+
+         
+    
+  </select>
+
+  <div wire:ignore="">
+    <input type="text" class="form-control ac-input" placeholder="" autocomplete="off" />
+</div>
+
+
+  
+  <div class="ss-dropdown hidden" >
+    
+    <template class="ss-option-template">
+      <div class="ss-option" data-key="">
+        <span></span>
+              </div>
+    </template>
+
+    
+    <div class="ss-options">
+    </div>
+
+    <div class="text-muted p-2 empty-results">
+      No results
+    </div>
+  </div>
+</div>

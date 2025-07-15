@@ -7,20 +7,19 @@
 Opinionated library designed to streamline the process of building forms in Laravel applications by leveraging Blade
 components and Boostrap utilities.
 
-
 - [Key Features](#key-features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Examples](#examples)
 - [Components](#components)
   - [SearchSelect](#searchselect)
+  - [Autocomplete](#autocomplete)
   - [MultiSelect](#multiselect)
   - [Select](#select)
   - [Input](#input)
   - [Textarea](#textarea)
   - [Checkbox](#checkbox)
   - [Radio](#radio)
-
 
 ### Key Features
 
@@ -33,8 +32,6 @@ components and Boostrap utilities.
 - **Livewire Support**: Fully integrate with Livewire by forwarding tags (e.g., `wire:model`) to the underlying
   input/select
   elements.
-
-
 
 ### Installation
 
@@ -86,16 +83,16 @@ Go from:
 <form action="{{ route('users.edit', ['id' => $user->id]) }}" method="POST">
     @csrf
     @method('patch')
-        
+
     <label for="name" class="form-label">{{ __('user.name') }}</label>
     <input type="text"
            class="form-control"
            id="name"
            name="name"
            value="{{ old('name', $user->name) }}"
-    
+
     />
-    
+
     <label for="role" class="form-label">{{ __('user.role') }}</label>
     <select name="role" id="role" class="form-select">
         <option value="">-- Select a role --</option>
@@ -107,13 +104,13 @@ Go from:
             </option>
         @endforeach
     </select>
-    
+
     <div class="form-check">
         <input type="checkbox"
-               class="form-check-input" 
-               value="1" 
+               class="form-check-input"
+               value="1"
                name="newsletter"
-               id="newsletter" 
+               id="newsletter"
                @checked(old('newsletter', $user->newsletter) === '1') />
         <label class="form-check-label" for="newsletter">
             Subscribe to newsletter
@@ -140,7 +137,7 @@ To:
 
     <x-bs::checkbox
         name="newsletter"
-        label="Subscribe to newsletter" 
+        label="Subscribe to newsletter"
     />
 </x-bs::form>
 ```
@@ -150,7 +147,6 @@ To:
 #### Form
 
 Renders a form, with optional modal binding.
-
 
 ```bladehtml
 
@@ -183,20 +179,54 @@ Renders a single selection element with a research bar for filtering the options
 > [!IMPORTANT]  
 > Include `{{ BsBladeForms::assets() }}` in the page head for this component to work
 
-| Attribute          | Type              | Description                                                                    |
-|--------------------|-------------------|--------------------------------------------------------------------------------|
-| name               | string            | *Required*. Name of the select element                                         |
-| options            | array, Collection | The options to display on the select.                                          |
-| fetch-url          | string            | An url to fetch for available options (to use with big data). The library will add a `q` querystring param with the searched string. Response should be a json in the `{ [value]: [label] }` format|
-| value              | string, int       | The initial selected value                                                     |                                      |
-| required           | bool              | Set the select element as required (form can't be submitted without selection) |                                      |
-| placeholder        | string            | Element placeholder when no option is selected                                 |
-| label              | string            | If present, renders a `Label` above the element                                |
-| icon               | string            | If present, renders an `IconGroup` around the element                          |
-| allow-clear        | bool              | Allows the user to clear the selected option                                   |
-| empty-value        | string            | The value to submit when no option is selected                                 |
-| search-placeholder | string            | The placeholder of the search input                                            |
-| *                  |                   | Additional attributes will be forwarded to the underlying element.             |
+| Attribute          | Type              | Description                                                                                                                                                                                         |
+| ------------------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| name               | string            | _Required_. Name of the select element                                                                                                                                                              |
+| options            | array, Collection | The options to display on the select.                                                                                                                                                               |
+| fetch-url          | string            | An url to fetch for available options (to use with big data). The library will add a `q` querystring param with the searched string. Response should be a json in the `{ [value]: [label] }` format |
+| value              | string, int       | The initial selected value                                                                                                                                                                          |     |
+| required           | bool              | Set the select element as required (form can't be submitted without selection)                                                                                                                      |     |
+| placeholder        | string            | Element placeholder when no option is selected                                                                                                                                                      |
+| label              | string            | If present, renders a `Label` above the element                                                                                                                                                     |
+| icon               | string            | If present, renders an `IconGroup` around the element                                                                                                                                               |
+| allow-clear        | bool              | Allows the user to clear the selected option                                                                                                                                                        |
+| empty-value        | string            | The value to submit when no option is selected                                                                                                                                                      |
+| search-placeholder | string            | The placeholder of the search input                                                                                                                                                                 |
+| \*                 |                   | Additional attributes will be forwarded to the underlying element.                                                                                                                                  |
+
+#### Autocomplete
+
+Renders an input field with dropdown suggestions that can be filtered by typing.
+
+```bladehtml
+<x-bs::autocomplete
+    label="Your country"
+    name="country"
+    :value="$user->country"
+    :options="$countries"
+    icon="bi bi-map"
+    placeholder="Start typing..."
+    required
+    allow-clear
+/>
+```
+
+> [!IMPORTANT]  
+> Include `{{ BsBladeForms::assets() }}` in the page head for this component to work
+
+| Attribute   | Type              | Description                                                                                                                                                                                         |
+| ----------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| name        | string            | _Required_. Name of the select element                                                                                                                                                              |
+| options     | array, Collection | The options to display in the dropdown.                                                                                                                                                             |
+| fetch-url   | string            | An url to fetch for available options (to use with big data). The library will add a `q` querystring param with the searched string. Response should be a json in the `{ [value]: [label] }` format |
+| value       | string, int       | The initial selected value                                                                                                                                                                          |     |
+| required    | bool              | Set the element as required (form can't be submitted without selection)                                                                                                                             |     |
+| placeholder | string            | Input placeholder text when no option is selected                                                                                                                                                   |
+| label       | string            | If present, renders a `Label` above the element                                                                                                                                                     |
+| icon        | string            | If present, renders an `IconGroup` around the element                                                                                                                                               |
+| allow-clear | bool              | Allows the user to clear the selected option                                                                                                                                                        |
+| empty-value | string            | The value to submit when no option is selected                                                                                                                                                      |
+| \*          |                   | Additional attributes will be forwarded to the underlying element.                                                                                                                                  |
 
 #### MultiSelect
 
@@ -217,19 +247,19 @@ Renders a multiple selection element with a research bar for filtering the optio
 > [!IMPORTANT]  
 > Include `{{ BsBladeForms::assets() }}` in the page head for this component to work
 
-| Attribute          | Type              | Description                                                                    |
-|--------------------|-------------------|--------------------------------------------------------------------------------|
-| name               | string            | *Required*. Name of the select element                                         |
-| options            | array, Collection | The options to display on the select.                                          |
-| fetch-url          | string            | An url to fetch for available options (to use with big data). The library will add a `q` querystring param with the searched string. Response should be a json in the `{ [value]: [label] }` format|
-| value              | array             | The initial selected values                                                    |
-| required           | bool              | Set the select element as required (form can't be submitted without selection) |
-| placeholder        | string            | Element placeholder when no option is selected                                 |
-| label              | string            | If present, renders a `Label` above the element                                |
-| icon               | string            | If present, renders an `IconGroup` around the element                          |
-| search-placeholder | string            | The placeholder of the search input                                            |
-| select-buttons     | bool              | Whether or not to show "select all" and "unselect all" buttons (default true)  |
-| *                  |                   | Additional attributes will be forwarded to the underlying element.             |
+| Attribute          | Type              | Description                                                                                                                                                                                         |
+| ------------------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| name               | string            | _Required_. Name of the select element                                                                                                                                                              |
+| options            | array, Collection | The options to display on the select.                                                                                                                                                               |
+| fetch-url          | string            | An url to fetch for available options (to use with big data). The library will add a `q` querystring param with the searched string. Response should be a json in the `{ [value]: [label] }` format |
+| value              | array             | The initial selected values                                                                                                                                                                         |
+| required           | bool              | Set the select element as required (form can't be submitted without selection)                                                                                                                      |
+| placeholder        | string            | Element placeholder when no option is selected                                                                                                                                                      |
+| label              | string            | If present, renders a `Label` above the element                                                                                                                                                     |
+| icon               | string            | If present, renders an `IconGroup` around the element                                                                                                                                               |
+| search-placeholder | string            | The placeholder of the search input                                                                                                                                                                 |
+| select-buttons     | bool              | Whether or not to show "select all" and "unselect all" buttons (default true)                                                                                                                       |
+| \*                 |                   | Additional attributes will be forwarded to the underlying element.                                                                                                                                  |
 
 #### Select
 
@@ -247,16 +277,15 @@ Renders a multiple selection element with a research bar for filtering the optio
 ```
 
 | Attribute    | Type              | Description                                                                             |
-|--------------|-------------------|-----------------------------------------------------------------------------------------|
-| name         | string            | *Required*. Name of the select element                                                  |
+| ------------ | ----------------- | --------------------------------------------------------------------------------------- | --- |
+| name         | string            | _Required_. Name of the select element                                                  |
 | options      | array, Collection | The options to display on the select.                                                   |
-| value        | string            | The initial selected values                                                             |                                      |
-| required     | bool              | Set the select element as required (form can't be submitted without selection)          |                                      |
+| value        | string            | The initial selected values                                                             |     |
+| required     | bool              | Set the select element as required (form can't be submitted without selection)          |     |
 | label        | string            | If present, renders a `Label` above the element                                         |
 | icon         | string            | If present, renders an `IconGroup` around the element                                   |
 | empty-option | string            | When present, an additional option with empty string as value is added with this label. |
-| *            |                   | Additional attributes will be forwarded to the underlying element.                      |
-
+| \*           |                   | Additional attributes will be forwarded to the underlying element.                      |
 
 #### Input
 
@@ -268,19 +297,18 @@ Renders a multiple selection element with a research bar for filtering the optio
     name="email"
     :value="$user->email"
     icon="bi bi-envelop"
-    required 
+    required
 />
 ```
 
 | Attribute | Type   | Description                                                        |
-|-----------|--------|--------------------------------------------------------------------|
-| name      | string | *Required*. Name of the input element                              |
-| value     | string | The initial value                                                  |       
+| --------- | ------ | ------------------------------------------------------------------ |
+| name      | string | _Required_. Name of the input element                              |
+| value     | string | The initial value                                                  |
 | label     | string | If present, renders a `Label` above the element                    |
 | icon      | string | If present, renders an `IconGroup` around the element              |
 | type      | string | Type of the input (`text` by default)                              |
-| *         |        | Additional attributes will be forwarded to the underlying element. |
-
+| \*        |        | Additional attributes will be forwarded to the underlying element. |
 
 #### Textarea
 
@@ -290,17 +318,16 @@ Renders a multiple selection element with a research bar for filtering the optio
     label="Notes"
     name="notes"
     :value="$user->notes"
-    required 
+    required
 />
 ```
 
 | Attribute | Type   | Description                                                        |
-|-----------|--------|--------------------------------------------------------------------|
-| name      | string | *Required*. Name of the textarea element                           |
-| value     | string | The initial value                                                  |                                      |
+| --------- | ------ | ------------------------------------------------------------------ | --- |
+| name      | string | _Required_. Name of the textarea element                           |
+| value     | string | The initial value                                                  |     |
 | label     | string | If present, renders a `Label` above the element                    |
-| *         |        | Additional attributes will be forwarded to the underlying element. |
-
+| \*        |        | Additional attributes will be forwarded to the underlying element. |
 
 #### Checkbox
 
@@ -314,20 +341,18 @@ Renders a multiple selection element with a research bar for filtering the optio
 ```
 
 > [!NOTE]  
-> When the form is submitted, a parameter is submitted even when the checkbox is not checked! 
+> When the form is submitted, a parameter is submitted even when the checkbox is not checked!
 > The parameter submitted has value `1` when the checkbox is checked, `0` otherwise
 
-
 | Attribute        | Type   | Description                                                            |
-|------------------|--------|------------------------------------------------------------------------|
-| name             | string | *Required*. Name of the element                                  |
+| ---------------- | ------ | ---------------------------------------------------------------------- |
+| name             | string | _Required_. Name of the element                                        |
 | label            | string | If present, renders a `Label` aside the input checkbox                 |
-| checked          | bool   | Initial checked value (default `false`)                                |                                      
-| value            | string | The value submitted when the checkbox is checked (default `1`)         |                                      
-| false-value      | string | The value submitted when the checkbox is not checked (default `0`)     |                                      
-| send-false-value | bool   | Send the false value when  the checkbox is not checked (default `true`) |                                      
-| *                |        | Additional attributes will be forwarded to the underlying element.     |
-
+| checked          | bool   | Initial checked value (default `false`)                                |
+| value            | string | The value submitted when the checkbox is checked (default `1`)         |
+| false-value      | string | The value submitted when the checkbox is not checked (default `0`)     |
+| send-false-value | bool   | Send the false value when the checkbox is not checked (default `true`) |
+| \*               |        | Additional attributes will be forwarded to the underlying element.     |
 
 #### Radio
 
@@ -341,27 +366,24 @@ Renders a multiple selection element with a research bar for filtering the optio
 />
 ```
 
-| Attribute        | Type   | Description                                                             |
-|------------------|--------|-------------------------------------------------------------------------|
-| name             | string | *Required*. Name of the element                                         |
-| label            | string | If present, renders a `Label` aside the input radio                     |
-| checked          | bool   | Initial checked value (default `false`)                                 |                                      
-| value            | string | The value submitted when the checkbox is checked                        |                                      
-| *                |        | Additional attributes will be forwarded to the underlying element.      |
-
+| Attribute | Type   | Description                                                        |
+| --------- | ------ | ------------------------------------------------------------------ |
+| name      | string | _Required_. Name of the element                                    |
+| label     | string | If present, renders a `Label` aside the input radio                |
+| checked   | bool   | Initial checked value (default `false`)                            |
+| value     | string | The value submitted when the checkbox is checked                   |
+| \*        |        | Additional attributes will be forwarded to the underlying element. |
 
 #### Label
 
 All form components automatically include the `Label` component when the `label` attribute is present, but it can be used independently:
 
-
 ```bladehtml
 
-<x-bs::label name="email"> 
+<x-bs::label name="email">
     User email
 </x-bs::label>
 ```
-
 
 ### Changelog
 
@@ -380,7 +402,7 @@ email [balduzzi.giorgio@tiknil.com](mailto:balduzzi.giorgio@tiknil.com) instead 
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-----
+---
 
 This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com), following the
 [laravelpackage.com](https://laravelpackage.com) documentation.
