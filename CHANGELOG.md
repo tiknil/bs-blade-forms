@@ -2,11 +2,13 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
+## 0.6.0 - 2025-04-04
+
+- feat: new Autocomplete component
 
 ## 0.5.1 - 2025-04-04
 
 - fix: mouseover handler did not work on fetched options
-
 
 ## 0.5.0 - 2025-04-04
 
