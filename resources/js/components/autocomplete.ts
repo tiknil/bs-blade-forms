@@ -33,12 +33,22 @@ export class Autocomplete extends CustomSelect {
     // Listen to input focus to show dropdown
     this.input.addEventListener('focus', () => {
       this.open()
+      this.search()
+
+      this.input.select()
     })
 
     this.input.addEventListener('blur', () => {
-      if (this.input.value !== '' && this.input.value !== this.latestPreview) {
-        this.onOptionSelected(this.emptyValue)
-      }
+      // Each click on a dropdown option triggers this eventListener immediately
+      // Without the timeout, it would force the emptyValue instead of selected option
+      setTimeout(() => {
+        if (
+          this.input.value !== '' &&
+          this.input.value !== this.latestPreview
+        ) {
+          this.onOptionSelected(this.emptyValue)
+        }
+      }, 250)
     })
   }
 
