@@ -2,7 +2,16 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
-## 0.6.0 - 2025-04-04
+## 0.6.2 - 2025-07-16
+
+- fix: conflict between autocomplete blur handler and option selection
+- fix: use proper translation key for autocomplete no results
+
+## 0.6.1 - 2025-07-15
+
+- fix: add updated compiled assets
+
+## 0.6.0 - 2025-07-15
 
 - feat: new Autocomplete component
 
