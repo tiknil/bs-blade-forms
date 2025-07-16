@@ -53,7 +53,7 @@
     </div>
 
     <div class="text-muted p-2 empty-results">
-      {{ __('bs-blade-forms::components.autocomplete.no-results') }}
+      {{ __('bs-blade-forms::components.custom-select.no-results') }}
     </div>
   </div>
 </div>

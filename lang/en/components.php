@@ -8,7 +8,4 @@ return [
         'select-all' => 'Select all',
         'unselect-all' => 'Unselect all',
     ],
-    'autocomplete' => [
-        'no-results' => 'No results',
-    ],
 ];
