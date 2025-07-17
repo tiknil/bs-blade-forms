@@ -2,6 +2,10 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
+## 0.6.3 - 2025-07-16
+
+- perf: Select optimizations for Safari
+
 ## 0.6.2 - 2025-07-16
 
 - fix: conflict between autocomplete blur handler and option selection
