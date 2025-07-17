@@ -34,7 +34,7 @@
     </div>
 
     <div class="text-muted p-2 empty-results">
-      No results
+      bs-blade-forms::components.custom-select.no-results
     </div>
   </div>
 </div>
