@@ -322,31 +322,34 @@ export class CustomSelect {
     let newActive: string | null = null
 
     const toShow: HTMLElement[] = []
-    const toHide: HTMLElement[] = []
 
     for (const [key, opt] of this.dropdownOptions) {
       const shouldShow =
         s === '' || this.optionsSearchText.get(key)?.includes(s)
 
       if (shouldShow) {
-        if (opt.classList.contains('hidden')) {
-          toShow.push(opt)
-        }
+        toShow.push(opt)
 
         if (newActive === null) {
           newActive = key
-        }
-      } else {
-        if (!opt.classList.contains('hidden')) {
-          toHide.push(opt)
         }
       }
     }
 
     // Do all work in a single frame, avoiding multiple browser reflow & repaint
     requestAnimationFrame(() => {
-      toShow.forEach((opt) => opt.classList.remove('hidden'))
-      toHide.forEach((opt) => opt.classList.add('hidden'))
+      const parent = this.dropdown.querySelector(`.ss-options`)!
+
+      // Create a new document tree, with the options that should be visible
+      // then replace the existing options with the new ones.
+      // After benchmarking, this approach is much faster than simply showing / hiding the changed ones
+      // especially on safari! (~3s to hide 2k options before)
+
+      const fragment = document.createDocumentFragment()
+      toShow.forEach((opt) => {
+        fragment.appendChild(opt)
+      })
+      parent.replaceChildren(fragment)
 
       this.setActive(newActive)
     })
@@ -477,7 +480,9 @@ export class CustomSelect {
 
   moveActiveDown = () => {
     let next = false
-    for (const key of this.dropdownOptions.keys()) {
+    for (const [key, el] of this.dropdownOptions.entries()) {
+      // isConnected is true when the option is in the DOM (and therefore visible)
+      if (!el.isConnected) continue
       if (next) {
         this.setActive(key)
         break
@@ -490,7 +495,9 @@ export class CustomSelect {
 
   moveActiveUp = () => {
     let prev: string | null = null
-    for (const key of this.dropdownOptions.keys()) {
+    for (const [key, el] of this.dropdownOptions.entries()) {
+      // isConnected is true when the option is in the DOM (and therefore visible)
+      if (!el.isConnected) continue
       if (key === this.active) {
         if (prev) {
           this.setActive(prev)

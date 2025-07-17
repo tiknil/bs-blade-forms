@@ -35,7 +35,8 @@ export class Autocomplete extends CustomSelect {
       this.open()
       this.search()
 
-      this.input.select()
+      // Without the timeout, safari does not handle select properly
+      setTimeout(() => this.input.select(), 50)
     })
 
     this.input.addEventListener('blur', () => {
