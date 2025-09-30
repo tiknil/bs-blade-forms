@@ -80,6 +80,7 @@ describe('Renders correctly', function () {
                 placeholder="Start typing..." 
                 allow-clear 
                 empty-value="0" 
+                allow-custom-values
             />',
             ['options' => TEST_OPTIONS]
         );
@@ -88,6 +89,7 @@ describe('Renders correctly', function () {
             ->assertSee('<label', false)
             ->assertSee('class="ac-wrapper"', false)
             ->assertSee('<option value="it" selected', false)
+            ->assertSee('data-allow-custom', false)
             ->and($view)->toMatchSnapshot();
     });
 
