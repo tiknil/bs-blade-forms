@@ -1,18 +1,23 @@
-<div class="ac-wrapper"     data-fetchurl="https://fetch.url" >
+<div class="ac-wrapper"
+       data-fetchurl="https://fetch.url"   >
 
   
-  <select name="country" id="country" tabindex="-1" 
-      
-    class="ss-ghost-select">
+  <select class="ss-ghost-select"
+    id="country"
+    name="country"
+    tabindex="-1"
+            >
 
-    <option selected value=""></option>
+    <option value="" selected></option>
 
-         
-    
+              
   </select>
 
   <div wire:ignore="">
-    <input type="text" class="form-control ac-input" placeholder="" autocomplete="off" />
+    <input class="form-control ac-input"
+      type="text"
+      placeholder=""
+      autocomplete="off" />
 </div>
 
 

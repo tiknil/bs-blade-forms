@@ -1,22 +1,31 @@
-<div class="ac-wrapper"    >
+<div class="ac-wrapper"
+        >
 
   
-  <select name="country" id="country" tabindex="-1" 
-      
-    class="ss-ghost-select">
+  <select class="ss-ghost-select"
+    id="country"
+    name="country"
+    tabindex="-1"
+            >
 
-    <option selected value=""></option>
+    <option value="" selected></option>
 
-            <option value="it"  wire:key="country-it" >Italy</option>
-        <option value="de"  wire:key="country-de" >Germany</option>
-        <option value="fr"  wire:key="country-fr" >France</option>
-        <option value="us"  wire:key="country-us" >United States</option>
-     
-    
+                  <option value="it"
+                    wire:key="country-it">Italy</option>
+              <option value="de"
+                    wire:key="country-de">Germany</option>
+              <option value="fr"
+                    wire:key="country-fr">France</option>
+              <option value="us"
+                    wire:key="country-us">United States</option>
+          
   </select>
 
   <div wire:ignore="">
-    <input type="text" class="form-control ac-input" placeholder="" autocomplete="off" />
+    <input class="form-control ac-input"
+      type="text"
+      placeholder=""
+      autocomplete="off" />
 </div>
 
 

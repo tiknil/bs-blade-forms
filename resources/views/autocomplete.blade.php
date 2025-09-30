@@ -4,10 +4,13 @@
 <x-bs::label name="{{ $name }}">
   {{ $label }}
 </x-bs::label>
-@endif
+@endif 
 
-<div class="ac-wrapper" @if($livewire) wire:ignore.self data-livewire wire:key="ac-wrapper-{{ $name }}" @endif
-  @if(!empty($id)) id="{{ $id }}" @endif @if(!empty($fetchUrl)) data-fetchurl="{{ $fetchUrl }}" @endif>
+<div class="ac-wrapper" 
+  @if($livewire) wire:ignore.self data-livewire wire:key="ac-wrapper-{{ $name }}" @endif
+  @if(!empty($id)) id="{{ $id }}" @endif 
+  @if(!empty($fetchUrl)) data-fetchurl="{{ $fetchUrl }}" @endif
+  @if($allowCustomValues) data-allow-custom @endif >
 
   {{--
   The actual select element, hidden in the UI but required for easier integration with the browser:

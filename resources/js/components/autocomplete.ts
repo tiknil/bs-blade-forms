@@ -10,7 +10,7 @@ export class Autocomplete extends CustomSelect {
   }
 
   constructor(rootEl: Element) {
-    super(rootEl, false)
+    super(rootEl, false, rootEl.getAttribute('data-allow-custom') !== null)
 
     this.input = rootEl.querySelector('.ac-input') as HTMLInputElement
 

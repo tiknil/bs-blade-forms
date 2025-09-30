@@ -1,9 +1,12 @@
 import { debounce, throttle } from '@/utils/dom.ts'
 
+const CUSTOM_VALUE_KEY = 'ac:custom-value'
+
 export class CustomSelect {
   rootEl: Element
 
   multiple: boolean
+  allowCustom: boolean = false
 
   fetchUrl: string | null = null
   private fetchAbortController: AbortController | null = null
@@ -12,6 +15,9 @@ export class CustomSelect {
   dropdown: HTMLElement
   dropdownOptions: Map<string, HTMLElement> = new Map()
   optionsSearchText: Map<string, string> = new Map()
+
+  dropdownOptionsWrapper: HTMLElement
+  template: HTMLTemplateElement
 
   dropdownSearch: HTMLInputElement
   dropdownSelectAllBtn: HTMLButtonElement | null = null
@@ -40,8 +46,9 @@ export class CustomSelect {
     return this.dropdownSearch?.value ?? ''
   }
 
-  constructor(rootEl: Element, multiple: boolean) {
+  constructor(rootEl: Element, multiple: boolean, allowCustom: boolean) {
     this.multiple = multiple
+    this.allowCustom = allowCustom
 
     this.fetchUrl = rootEl.getAttribute('data-fetchurl')
 
@@ -58,6 +65,11 @@ export class CustomSelect {
     this.dropdownUnselectAllBtn = this.dropdown.querySelector(
       `.ss-dropdown-search .ss-unselect-all`,
     )
+
+    this.dropdownOptionsWrapper = this.dropdown.querySelector(`.ss-options`)!
+    this.template = rootEl.querySelector(
+      `.ss-option-template`,
+    ) as HTMLTemplateElement
 
     this.uiBox = rootEl.querySelector(`.ss-box`)!
 
@@ -324,8 +336,14 @@ export class CustomSelect {
     const toShow: HTMLElement[] = []
 
     for (const [key, opt] of this.dropdownOptions) {
+      if (key === CUSTOM_VALUE_KEY) {
+        opt.querySelector('span')!.innerText = this.searched
+      }
+
       const shouldShow =
-        s === '' || this.optionsSearchText.get(key)?.includes(s)
+        key === CUSTOM_VALUE_KEY ||
+        s === '' ||
+        this.optionsSearchText.get(key)?.includes(s)
 
       if (shouldShow) {
         toShow.push(opt)
@@ -338,7 +356,7 @@ export class CustomSelect {
 
     // Do all work in a single frame, avoiding multiple browser reflow & repaint
     requestAnimationFrame(() => {
-      const parent = this.dropdown.querySelector(`.ss-options`)!
+      const parent = this.dropdownOptionsWrapper
 
       // Create a new document tree, with the options that should be visible
       // then replace the existing options with the new ones.
@@ -358,50 +376,28 @@ export class CustomSelect {
   populateDropdown = () => {
     const existingValues = new Set(this.dropdownOptions.keys())
 
-    const template = this.rootEl.querySelector(
-      `.ss-option-template`,
-    ) as HTMLTemplateElement
-
-    const optionsWrapper = this.dropdown.querySelector(`.ss-options`)!
-
     for (const optEl of this.select.options) {
       if (optEl.value === this.emptyValue) continue
 
       // For each options in the root select element, add the equivalent option in the dropdown
+      existingValues.delete(optEl.value)
 
-      // To improve performance, do not recreate element if it already exists
-      if (this.dropdownOptions.has(optEl.value)) {
-        existingValues.delete(optEl.value)
+      this.updateDropdownOption(
+        this.dropdownOptions.get(optEl.value) ?? null, // Se vuoto, viene creato
+        optEl.value,
+        optEl.label,
+        optEl.hasAttribute('data-hidden'),
+      )
+    }
 
-        const dropdownOption = this.dropdownOptions.get(optEl.value)!
-        dropdownOption.querySelector('span')!.innerText = optEl.innerText
-
-        if (optEl.hasAttribute('data-hidden')) {
-          dropdownOption.classList.add('hidden')
-        } else {
-          dropdownOption.classList.remove('hidden')
-        }
-        continue
-      }
-
-      const dropdownOption = (template.content.cloneNode(true) as HTMLElement)
-        .firstElementChild as HTMLElement
-
-      dropdownOption.setAttribute('data-key', optEl.value)
-      dropdownOption.querySelector('span')!.innerText = optEl.label
-
-      if (optEl.hasAttribute('data-hidden')) {
-        dropdownOption.classList.add('hidden')
-      } else {
-        dropdownOption.classList.remove('hidden')
-      }
-
-      optionsWrapper.appendChild(dropdownOption)
-
-      this.onDropdownOptionCreated(dropdownOption, optEl.value)
-
-      this.dropdownOptions.set(optEl.value, dropdownOption)
-      this.optionsSearchText.set(optEl.value, optEl.label.toLowerCase())
+    if (this.allowCustom) {
+      existingValues.delete(CUSTOM_VALUE_KEY)
+      this.updateDropdownOption(
+        this.dropdownOptions.get(CUSTOM_VALUE_KEY) ?? null, // Se vuoto, viene creato
+        CUSTOM_VALUE_KEY,
+        this.searched,
+        false,
+      )
     }
 
     // Existing values not removed at the previous step are no longer available, we can remove them
@@ -413,6 +409,40 @@ export class CustomSelect {
     })
   }
 
+  updateDropdownOption = (
+    dropdownOption: HTMLElement | null,
+    key: string,
+    label: string,
+    hidden: boolean,
+  ) => {
+    const isCreation = dropdownOption === null
+
+    if (dropdownOption === null) {
+      dropdownOption = (this.template.content.cloneNode(true) as HTMLElement)
+        .firstElementChild as HTMLElement
+    }
+
+    dropdownOption.setAttribute('data-key', key)
+    dropdownOption.querySelector('span')!.innerText = label
+
+    if (hidden) {
+      dropdownOption.classList.add('hidden')
+    } else {
+      dropdownOption.classList.remove('hidden')
+    }
+
+    if (isCreation) {
+      this.dropdownOptionsWrapper.appendChild(dropdownOption)
+
+      this.onDropdownOptionCreated(dropdownOption, key)
+
+      this.dropdownOptions.set(key, dropdownOption)
+      this.optionsSearchText.set(key, label.toLowerCase())
+    }
+
+    return dropdownOption
+  }
+
   onDropdownOptionCreated = (opt: HTMLElement, key: string) => {
     opt.addEventListener(
       'mousemove',
@@ -421,6 +451,15 @@ export class CustomSelect {
   }
 
   onOptionSelected = (key: string | null) => {
+    if (key === CUSTOM_VALUE_KEY) {
+      const optEl = document.createElement('option')
+      optEl.value = this.searched
+      optEl.innerText = this.searched
+      optEl.selected = true
+      this.select.add(optEl)
+      key = this.searched
+    }
+
     if (key == null) {
       key = this.emptyValue
     }
