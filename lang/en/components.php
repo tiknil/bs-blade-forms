@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'search-select' => [
+    'custom-select' => [
         'search-placeholder' => 'Search across the options',
         'no-results' => 'No results',
 
