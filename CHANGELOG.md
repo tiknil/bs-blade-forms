@@ -2,6 +2,10 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
+## 0.7.1 - 2026-02-24
+
+- fix: english translations
+
 ## 0.7.0 - 2025-09-30
 
 - feat: Support for custom values in the autocomplete element
