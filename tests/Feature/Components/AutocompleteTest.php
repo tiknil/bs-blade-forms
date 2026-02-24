@@ -120,5 +120,5 @@ describe('Renders correctly', function () {
         expect($view)
             ->assertSee('<option value="it" selected', false)
             ->and($view)->toMatchSnapshot();
-    })->only();
+    });
 });

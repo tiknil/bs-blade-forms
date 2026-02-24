@@ -1,13 +1,20 @@
-<div class="ss-wrapper"    >
+<label for="country" class="form-label">
+      Country
+  </label>
+ 
+
+<div class="ac-wrapper" 
+     
+     data-allow-custom  >
 
   
   <select name="country" id="country" tabindex="-1" 
       
     class="ss-ghost-select">
 
-    <option selected value=""></option>
+    <option  value="0"></option>
 
-            <option value="it"  wire:key="country-it" >Italy</option>
+            <option value="it" selected wire:key="country-it" >Italy</option>
         <option value="de"  wire:key="country-de" >Germany</option>
         <option value="fr"  wire:key="country-fr" >France</option>
         <option value="us"  wire:key="country-us" >United States</option>
@@ -16,29 +23,24 @@
   </select>
 
   <div wire:ignore="">
-    <div role="button" aria-label="" tabindex="0"
-      class="form-select ss-box">
+    <div class="input-group">
+    <span class="input-group-text">
+              <i class="bi bi-map"></i>
+            
+    </span>
 
-      <div class="text-muted ss-placeholder">
-                &nbsp;
-              </div>
-      <div class="ss-value-label" style="display:none;"></div>
-    </div>
+    <input type="text" class="form-control ac-input" placeholder="Start typing..." autocomplete="off" />
+  </div>
 </div>
 
 
   
   <div class="ss-dropdown hidden" >
-
-    <div class="ss-dropdown-search">
-      <input type="text" class="form-control form-control-sm "
-        placeholder="Search across the options" />
-    </div>
-
     
     <template class="ss-option-template">
       <div class="ss-option" data-key="">
         <span></span>
+                <i class="bi bi-x-lg ss-remove-icon"></i>
               </div>
     </template>
 
@@ -49,6 +51,5 @@
     <div class="text-muted p-2 empty-results">
       No results
     </div>
-
   </div>
 </div>

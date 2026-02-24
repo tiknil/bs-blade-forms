@@ -1,31 +1,24 @@
-<div class="ac-wrapper"
-        >
+<div class="ac-wrapper" 
+     
+     >
 
   
-  <select class="ss-ghost-select"
-    id="country"
-    name="country"
-    tabindex="-1"
-            >
+  <select name="country" id="country" tabindex="-1" 
+      
+    class="ss-ghost-select">
 
-    <option value="" selected></option>
+    <option selected value=""></option>
 
-                  <option value="it"
-                    wire:key="country-it">Italy</option>
-              <option value="de"
-                    wire:key="country-de">Germany</option>
-              <option value="fr"
-                    wire:key="country-fr">France</option>
-              <option value="us"
-                    wire:key="country-us">United States</option>
-          
+            <option value="it"  wire:key="country-it" >Italy</option>
+        <option value="de"  wire:key="country-de" >Germany</option>
+        <option value="fr"  wire:key="country-fr" >France</option>
+        <option value="us"  wire:key="country-us" >United States</option>
+     
+    
   </select>
 
   <div wire:ignore="">
-    <input class="form-control ac-input"
-      type="text"
-      placeholder=""
-      autocomplete="off" />
+    <input type="text" class="form-control ac-input" placeholder="" autocomplete="off" />
 </div>
 
 
@@ -43,7 +36,7 @@
     </div>
 
     <div class="text-muted p-2 empty-results">
-      bs-blade-forms::components.custom-select.no-results
+      No results
     </div>
   </div>
 </div>

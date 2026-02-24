@@ -68,7 +68,7 @@
 
     <div class="ss-dropdown-search">
       <input type="text" class="form-control form-control-sm "
-        placeholder="bs-blade-forms::components.custom-select.search-placeholder" />
+        placeholder="Search across the options" />
     </div>
 
     
@@ -83,7 +83,7 @@
     </div>
 
     <div class="text-muted p-2 empty-results">
-      bs-blade-forms::components.custom-select.no-results
+      No results
     </div>
 
   </div>
@@ -150,17 +150,17 @@
 
       <input type="text" class="form-control form-control-sm"
              autocomplete="off"
-             placeholder="bs-blade-forms::components.custom-select.search-placeholder"/>
+             placeholder="Search across the options"/>
       
               <button class="btn btn-light ss-select-all"
                 type="button"
-                title="bs-blade-forms::components.custom-select.select-all">
+                title="Select all">
           <i class="bi bi-check2-all"></i>
         </button>
 
         <button class="btn btn-light ss-unselect-all"
                 type="button"
-                title="bs-blade-forms::components.custom-select.unselect-all">
+                title="Unselect all">
           <i class="bi bi-dash-square-dotted"></i>
         </button>
           </div>
@@ -179,7 +179,7 @@
     </div>
 
     <div class="text-muted p-2 empty-results">
-      bs-blade-forms::components.custom-select.no-results
+      No results
     </div>
 
   </div>

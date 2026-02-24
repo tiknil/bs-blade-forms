@@ -54,13 +54,13 @@
       
               <button class="btn btn-light ss-select-all"
                 type="button"
-                title="bs-blade-forms::components.custom-select.select-all">
+                title="Select all">
           <i class="bi bi-check2-all"></i>
         </button>
 
         <button class="btn btn-light ss-unselect-all"
                 type="button"
-                title="bs-blade-forms::components.custom-select.unselect-all">
+                title="Unselect all">
           <i class="bi bi-dash-square-dotted"></i>
         </button>
           </div>
@@ -79,7 +79,7 @@
     </div>
 
     <div class="text-muted p-2 empty-results">
-      bs-blade-forms::components.custom-select.no-results
+      No results
     </div>
 
   </div>

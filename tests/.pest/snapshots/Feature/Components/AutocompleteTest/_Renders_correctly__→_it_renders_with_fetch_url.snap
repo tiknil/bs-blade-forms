@@ -1,23 +1,20 @@
-<div class="ac-wrapper"
-       data-fetchurl="https://fetch.url"   >
+<div class="ac-wrapper" 
+     
+   data-fetchurl="https://fetch.url"    >
 
   
-  <select class="ss-ghost-select"
-    id="country"
-    name="country"
-    tabindex="-1"
-            >
+  <select name="country" id="country" tabindex="-1" 
+      
+    class="ss-ghost-select">
 
-    <option value="" selected></option>
+    <option selected value=""></option>
 
-              
+         
+    
   </select>
 
   <div wire:ignore="">
-    <input class="form-control ac-input"
-      type="text"
-      placeholder=""
-      autocomplete="off" />
+    <input type="text" class="form-control ac-input" placeholder="" autocomplete="off" />
 </div>
 
 
@@ -35,7 +32,7 @@
     </div>
 
     <div class="text-muted p-2 empty-results">
-      bs-blade-forms::components.custom-select.no-results
+      No results
     </div>
   </div>
 </div>
