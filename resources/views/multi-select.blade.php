@@ -41,7 +41,7 @@
     <div role="button"
          aria-label="{{ $placeholder }}"
          tabindex="0"
-         class="form-select ss-box"
+         @class([config('bs-blade-forms.select_class'),"ss-box"])
     >
 
       <div class="text-muted ss-placeholder">

@@ -5,7 +5,7 @@
 @endif
 
 <x-bs::icon-group icon-class="{{ $icon }}">
-  <select id="{{ $name }}" name="{{ $name }}" {{ $attributes->merge(['class' => 'form-select']) }}>
+  <select id="{{ $name }}" name="{{ $name }}" {{ $attributes->merge(['class' => config('bs-blade-forms.select_class')]) }}>
     @if($emptyOption)
     <option value="" wire:key="{{$name}}-empty">{{ $emptyOption }}</option>
     @endif
