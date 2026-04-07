@@ -2,6 +2,11 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
+## 0.8.0 - 2026-04-07
+
+- feat: Select class can be customized from the config file
+- chore: Support for Laravel 13
+
 ## 0.7.1 - 2026-02-24
 
 - fix: english translations
