@@ -7,6 +7,8 @@ return [
     'label_class' => 'form-label',
     'checkbox_label_class' => 'form-check-label',
 
+    'select_class' => 'form-select',
+
     'icons' => [
         'select' => 'bi bi-check-lg',
         'unselect' => 'bi bi-x-lg',
