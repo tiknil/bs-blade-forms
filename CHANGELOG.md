@@ -2,6 +2,11 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
+## 0.8.1 - 2026-04-13
+
+- fix: now it is possible to select a custom autocomplete value
+- fix: Markdown tables were wrongfully formatted in the Readme
+
 ## 0.8.0 - 2026-04-07
 
 - feat: Select class can be customized from the config file
