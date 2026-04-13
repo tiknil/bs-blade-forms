@@ -585,6 +585,9 @@ export class CustomSelect {
         dropdownOpt.classList.add('selected')
 
         label = dropdownOpt.innerText ?? ''
+      } else {
+        // It should only happen when selecting a custom autocompleted option
+        label = this.current
       }
     }
 
