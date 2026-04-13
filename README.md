@@ -180,19 +180,19 @@ Renders a single selection element with a research bar for filtering the options
 > Include `{{ BsBladeForms::assets() }}` in the page head for this component to work
 
 | Attribute          | Type              | Description                                                                                                                                                                                         |
-| ------------------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| ------------------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | name               | string            | _Required_. Name of the select element                                                                                                                                                              |
 | options            | array, Collection | The options to display on the select.                                                                                                                                                               |
 | fetch-url          | string            | An url to fetch for available options (to use with big data). The library will add a `q` querystring param with the searched string. Response should be a json in the `{ [value]: [label] }` format |
-| value              | string, int       | The initial selected value                                                                                                                                                                          |     |
-| required           | bool              | Set the select element as required (form can't be submitted without selection)                                                                                                                      |     |
+| value              | string, int       | The initial selected value                                                                                                                                                                          |
+| required           | bool              | Set the select element as required (form can't be submitted without selection)                                                                                                                      |
 | placeholder        | string            | Element placeholder when no option is selected                                                                                                                                                      |
 | label              | string            | If present, renders a `Label` above the element                                                                                                                                                     |
 | icon               | string            | If present, renders an `IconGroup` around the element                                                                                                                                               |
 | allow-clear        | bool              | Allows the user to clear the selected option                                                                                                                                                        |
 | empty-value        | string            | The value to submit when no option is selected                                                                                                                                                      |
 | search-placeholder | string            | The placeholder of the search input                                                                                                                                                                 |
-| \*                 |                   | Additional attributes will be forwarded to the underlying element.                                                                                                                                  |
+|                    |                   | Additional attributes will be forwarded to the underlying element.                                                                                                                                  |
 
 #### Autocomplete
 
@@ -214,19 +214,20 @@ Renders an input field with dropdown suggestions that can be filtered by typing.
 > [!IMPORTANT]  
 > Include `{{ BsBladeForms::assets() }}` in the page head for this component to work
 
-| Attribute   | Type              | Description                                                                                                                                                                                         |
-| ----------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
-| name        | string            | _Required_. Name of the select element                                                                                                                                                              |
-| options     | array, Collection | The options to display in the dropdown.                                                                                                                                                             |
-| fetch-url   | string            | An url to fetch for available options (to use with big data). The library will add a `q` querystring param with the searched string. Response should be a json in the `{ [value]: [label] }` format |
-| value       | string, int       | The initial selected value                                                                                                                                                                          |     |
-| required    | bool              | Set the element as required (form can't be submitted without selection)                                                                                                                             |     |
-| placeholder | string            | Input placeholder text when no option is selected                                                                                                                                                   |
-| label       | string            | If present, renders a `Label` above the element                                                                                                                                                     |
-| icon        | string            | If present, renders an `IconGroup` around the element                                                                                                                                               |
-| allow-clear | bool              | Allows the user to clear the selected option                                                                                                                                                        |
-| empty-value | string            | The value to submit when no option is selected                                                                                                                                                      |
-| \*          |                   | Additional attributes will be forwarded to the underlying element.                                                                                                                                  |
+| Attribute           | Type              | Description                                                                                                                                                                                         |
+| ------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| name                | string            | _Required_. Name of the select element                                                                                                                                                              |
+| options             | array, Collection | The options to display in the dropdown.                                                                                                                                                             |
+| fetch-url           | string            | An url to fetch for available options (to use with big data). The library will add a `q` querystring param with the searched string. Response should be a json in the `{ [value]: [label] }` format |
+| value               | string, int       | The initial selected value                                                                                                                                                                          |
+| required            | bool              | Set the element as required (form can't be submitted without selection)                                                                                                                             |
+| placeholder         | string            | Input placeholder text when no option is selected                                                                                                                                                   |
+| label               | string            | If present, renders a `Label` above the element                                                                                                                                                     |
+| icon                | string            | If present, renders an `IconGroup` around the element                                                                                                                                               |
+| allow-clear         | bool              | Allows the user to clear the selected option                                                                                                                                                        |
+| allow-custom-values | bool              | Enable custom values definition (as simple strings)                                                                                                                                                 |
+| empty-value         | string            | The value to submit when no option is selected                                                                                                                                                      |
+|                     |                   | Additional attributes will be forwarded to the underlying element                                                                                                                                   |
 
 #### MultiSelect
 
@@ -259,7 +260,7 @@ Renders a multiple selection element with a research bar for filtering the optio
 | icon               | string            | If present, renders an `IconGroup` around the element                                                                                                                                               |
 | search-placeholder | string            | The placeholder of the search input                                                                                                                                                                 |
 | select-buttons     | bool              | Whether or not to show "select all" and "unselect all" buttons (default true)                                                                                                                       |
-| \*                 |                   | Additional attributes will be forwarded to the underlying element.                                                                                                                                  |
+|                    |                   | Additional attributes will be forwarded to the underlying element.                                                                                                                                  |
 
 #### Select
 
@@ -277,15 +278,15 @@ Renders a multiple selection element with a research bar for filtering the optio
 ```
 
 | Attribute    | Type              | Description                                                                             |
-| ------------ | ----------------- | --------------------------------------------------------------------------------------- | --- |
+| ------------ | ----------------- | --------------------------------------------------------------------------------------- |
 | name         | string            | _Required_. Name of the select element                                                  |
 | options      | array, Collection | The options to display on the select.                                                   |
-| value        | string            | The initial selected values                                                             |     |
-| required     | bool              | Set the select element as required (form can't be submitted without selection)          |     |
+| value        | string            | The initial selected values                                                             |
+| required     | bool              | Set the select element as required (form can't be submitted without selection)          |
 | label        | string            | If present, renders a `Label` above the element                                         |
 | icon         | string            | If present, renders an `IconGroup` around the element                                   |
 | empty-option | string            | When present, an additional option with empty string as value is added with this label. |
-| \*           |                   | Additional attributes will be forwarded to the underlying element.                      |
+|              |                   | Additional attributes will be forwarded to the underlying element.                      |
 
 #### Input
 
