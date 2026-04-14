@@ -34,6 +34,10 @@ class Autocomplete extends BaseFormInput
         $this->setOptions($options);
         $this->value = $this->parse($value);
 
+        if ($allowCustomValues && $this->value && !isset($this->options[$this->value])) {
+            $this->options[$this->value] = $this->value;
+        }
+
         parent::__construct($this->name);
     }
 

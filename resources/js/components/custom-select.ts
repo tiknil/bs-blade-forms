@@ -333,11 +333,15 @@ export class CustomSelect {
 
     let newActive: string | null = null
 
+    let exactMatch = false
+
     const toShow: HTMLElement[] = []
 
     for (const [key, opt] of this.dropdownOptions) {
       if (key === CUSTOM_VALUE_KEY) {
         opt.querySelector('span')!.innerText = this.searched
+
+        if (exactMatch) continue
       }
 
       const shouldShow =
@@ -350,6 +354,10 @@ export class CustomSelect {
 
         if (newActive === null) {
           newActive = key
+        }
+
+        if (!exactMatch && this.optionsSearchText.get(key) === s) {
+          exactMatch = true
         }
       }
     }

@@ -14,6 +14,8 @@ export class Autocomplete extends CustomSelect {
 
     this.input = rootEl.querySelector('.ac-input') as HTMLInputElement
 
+    this.input.value = this.current as string
+
     // Use the main input for search/filtering
     this.input.addEventListener(
       'input',
