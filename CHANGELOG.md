@@ -2,6 +2,10 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
+## 0.9.0 - 2026-04-14
+
+- feat: Add icon-text support
+
 ## 0.8.2 - 2026-04-14
 
 - fix: proper handling of initial custom values
