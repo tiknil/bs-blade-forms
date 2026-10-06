@@ -3,12 +3,12 @@
 use Tiknil\BsBladeForms\Utils\OldResolver;
 
 test('it returns null when old is null', function () {
-    $resolver = new OldResolver();
+    $resolver = new OldResolver;
     expect($resolver->solve('field'))->toBeNull();
 });
 
 test('it solves for multiple mixed data correctly', function () {
-    $resolver = new OldResolver();
+    $resolver = new OldResolver;
 
     Session::flash('_old_input', [
         'field' => 'value',
@@ -20,7 +20,7 @@ test('it solves for multiple mixed data correctly', function () {
 });
 
 test('it solves for nested array data', function () {
-    $resolver = new OldResolver();
+    $resolver = new OldResolver;
 
     Session::flash('_old_input', [
         'field' => [

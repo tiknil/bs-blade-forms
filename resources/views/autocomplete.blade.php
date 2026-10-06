@@ -34,7 +34,7 @@
 
   </select>
 
-  <x-bs::icon-group icon-class="{{ $icon }}" wire:ignore>
+  <x-bs::icon-group icon-class="{{ $icon }}" icon-text="{{ $iconText }}" wire:ignore>
     {{-- The element shown in the UI as the input field --}}
     <input type="text" class="form-control ac-input" placeholder="{{ $placeholder }}" autocomplete="off" />
   </x-bs::icon-group>

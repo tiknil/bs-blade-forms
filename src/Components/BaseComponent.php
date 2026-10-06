@@ -25,7 +25,7 @@ abstract class BaseComponent extends Component
             $newAttributes[$newKey] = $val;
         }
 
-        $subBag = new ComponentAttributeBag();
+        $subBag = new ComponentAttributeBag;
         $subBag->setAttributes($newAttributes);
 
         $this->except = array_merge($this->except, [array_keys($prefixAttributes)]);

@@ -19,6 +19,7 @@ class Select extends BaseFormInput
 
         public ?string $label = null,
         public ?string $icon = null,
+        public ?string $iconText = null,
 
         array|Collection $options = [],
         public ?string $emptyOption = null,

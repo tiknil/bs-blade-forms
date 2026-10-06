@@ -3,9 +3,10 @@
 namespace Tiknil\BsBladeForms;
 
 use Illuminate\Support\Facades\Facade;
+use Tiknil\BsBladeForms;
 
 /**
- * @see \Tiknil\BsBladeForms
+ * @see BsBladeForms
  */
 class BsBladeFormsFacade extends Facade
 {

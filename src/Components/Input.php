@@ -17,6 +17,7 @@ class Input extends BaseFormInput
 
         public ?string $label = null,
         public ?string $icon = null,
+        public ?string $iconText = null,
 
         public string $type = 'text'
 

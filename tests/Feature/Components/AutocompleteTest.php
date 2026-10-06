@@ -121,4 +121,16 @@ describe('Renders correctly', function () {
             ->assertSee('<option value="it" selected', false)
             ->and($view)->toMatchSnapshot();
     });
+
+    it('renders with icon-text', function () {
+
+        $view = $this->blade(
+            '<x-bs::autocomplete name="currency" :options="$options" icon-text="€" />',
+            ['options' => TEST_OPTIONS]
+        );
+
+        expect($view)
+            ->assertSee('€', false)
+            ->assertDontSee('<i class="', false);
+    });
 });

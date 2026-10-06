@@ -189,6 +189,7 @@ Renders a single selection element with a research bar for filtering the options
 | placeholder        | string            | Element placeholder when no option is selected                                                                                                                                                      |
 | label              | string            | If present, renders a `Label` above the element                                                                                                                                                     |
 | icon               | string            | If present, renders an `IconGroup` around the element                                                                                                                                               |
+| icon-text          | string            | If present, renders free text in the `IconGroup` (e.g. currency)                                                                                                                                    |
 | allow-clear        | bool              | Allows the user to clear the selected option                                                                                                                                                        |
 | empty-value        | string            | The value to submit when no option is selected                                                                                                                                                      |
 | search-placeholder | string            | The placeholder of the search input                                                                                                                                                                 |
@@ -224,6 +225,7 @@ Renders an input field with dropdown suggestions that can be filtered by typing.
 | placeholder         | string            | Input placeholder text when no option is selected                                                                                                                                                   |
 | label               | string            | If present, renders a `Label` above the element                                                                                                                                                     |
 | icon                | string            | If present, renders an `IconGroup` around the element                                                                                                                                               |
+| icon-text           | string            | If present, renders free text in the `IconGroup` (e.g. currency)                                                                                                                                    |
 | allow-clear         | bool              | Allows the user to clear the selected option                                                                                                                                                        |
 | allow-custom-values | bool              | Enable custom values definition (as simple strings)                                                                                                                                                 |
 | empty-value         | string            | The value to submit when no option is selected                                                                                                                                                      |
@@ -258,6 +260,7 @@ Renders a multiple selection element with a research bar for filtering the optio
 | placeholder        | string            | Element placeholder when no option is selected                                                                                                                                                      |
 | label              | string            | If present, renders a `Label` above the element                                                                                                                                                     |
 | icon               | string            | If present, renders an `IconGroup` around the element                                                                                                                                               |
+| icon-text          | string            | If present, renders free text in the `IconGroup` (e.g. currency)                                                                                                                                    |
 | search-placeholder | string            | The placeholder of the search input                                                                                                                                                                 |
 | select-buttons     | bool              | Whether or not to show "select all" and "unselect all" buttons (default true)                                                                                                                       |
 |                    |                   | Additional attributes will be forwarded to the underlying element.                                                                                                                                  |
@@ -285,6 +288,7 @@ Renders a multiple selection element with a research bar for filtering the optio
 | required     | bool              | Set the select element as required (form can't be submitted without selection)          |
 | label        | string            | If present, renders a `Label` above the element                                         |
 | icon         | string            | If present, renders an `IconGroup` around the element                                   |
+| icon-text    | string            | If present, renders free text in the `IconGroup` (e.g. currency)                        |
 | empty-option | string            | When present, an additional option with empty string as value is added with this label. |
 |              |                   | Additional attributes will be forwarded to the underlying element.                      |
 
@@ -308,6 +312,7 @@ Renders a multiple selection element with a research bar for filtering the optio
 | value     | string | The initial value                                                  |
 | label     | string | If present, renders a `Label` above the element                    |
 | icon      | string | If present, renders an `IconGroup` around the element              |
+| icon-text | string | If present, renders free text in the `IconGroup` (e.g. currency)   |
 | type      | string | Type of the input (`text` by default)                              |
 | \*        |        | Additional attributes will be forwarded to the underlying element. |
 

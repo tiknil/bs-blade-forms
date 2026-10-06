@@ -7,7 +7,7 @@ describe('Binds model', function () {
     it('binds and unbinds model', function () {
         bindModel(null);
 
-        $model = new TestModel();
+        $model = new TestModel;
 
         $form = new Form(model: $model);
 

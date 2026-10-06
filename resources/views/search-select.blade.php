@@ -31,7 +31,7 @@
 
   </select>
 
-  <x-bs::icon-group icon-class="{{ $icon }}" wire:ignore>
+  <x-bs::icon-group icon-class="{{ $icon }}" icon-text="{{ $iconText }}" wire:ignore>
     {{-- The element shown in the UI as if it's the actual select element --}}
     <div role="button" aria-label="{{ $placeholder }}" tabindex="0"
       @class([config('bs-blade-forms.select_class'),"ss-box"])>

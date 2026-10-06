@@ -114,4 +114,15 @@ describe('Renders correctly', function () {
         expect($view)->assertSee('value="test@example.com"', false);
     });
 
+    it('renders with icon-text', function () {
+
+        $view = $this->blade(
+            '<x-bs::input name="price" value="10" icon-text="€" />',
+        );
+
+        expect($view)
+            ->assertSee('€', false)
+            ->assertDontSee('<i class="', false);
+    });
+
 });

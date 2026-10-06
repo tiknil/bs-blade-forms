@@ -1,5 +1,8 @@
 <?php
 
+use Tiknil\BsBladeForms\Components\Form;
+use Tiknil\BsBladeForms\Tests\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,7 +14,7 @@
 |
 */
 
-uses(Tiknil\BsBladeForms\Tests\TestCase::class)->in('Feature', 'Unit');
+uses(TestCase::class)->in('Feature', 'Unit');
 
 afterEach(function () {
     bindModel(null);
@@ -45,5 +48,5 @@ expect()->extend('toBeOne', function () {
 
 function bindModel(mixed $model)
 {
-    \Tiknil\BsBladeForms\Components\Form::$model = $model;
+    Form::$model = $model;
 }

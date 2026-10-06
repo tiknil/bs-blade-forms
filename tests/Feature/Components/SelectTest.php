@@ -124,4 +124,16 @@ describe('Renders correctly', function () {
         expect($view)->assertSee('<option value="de" selected', false);
     });
 
+    it('renders with icon-text', function () {
+
+        $view = $this->blade(
+            '<x-bs::select name="currency" :options="$options" icon-text="€" />',
+            ['options' => TEST_OPTIONS]
+        );
+
+        expect($view)
+            ->assertSee('€', false)
+            ->assertDontSee('<i class="', false);
+    });
+
 });

@@ -138,4 +138,15 @@ describe('Renders correctly', function () {
 
     });
 
+    it('renders with icon-text', function () {
+
+        $view = $this->blade(
+            '<x-bs::multi-select name="countries" :options="$options" icon-text="€" :select-buttons="false" />',
+            ['options' => TEST_OPTIONS]
+        );
+
+        expect($view)
+            ->assertSee('€', false);
+    });
+
 });

@@ -74,7 +74,7 @@ test('it solves for nested model data correctly', function () {
 test('it solves for std object', function () {
     $resolver = new ModelResolver;
 
-    $model = new \stdClass;
+    $model = new stdClass;
     $model->name = 'name value';
     $model->data['field'] = 'field value';
 
@@ -87,7 +87,7 @@ test('it solves for std object', function () {
 test('it solves to null for missing field', function () {
     $resolver = new ModelResolver;
 
-    $model = new \stdClass;
+    $model = new stdClass;
     $model->name = 'name value';
 
     Form::$model = $model;
