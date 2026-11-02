@@ -1,8 +1,14 @@
 .ss-wrapper,
 .ms-wrapper,
 .ac-wrapper {
+  // Theme-aware variables: under [data-bs-theme="dark"] Bootstrap 5.3
+  // remaps these, so the components follow the active color scheme.
+  --cs-bg: var(--bs-body-bg, #fff);
+  --cs-color: var(--bs-body-color, #212529);
   --cs-active-color: var(--bs-primary-bg-subtle, #cfe2ff);
-  --cs-selected-color: var(--bs-gray-200, #e9ecef);
+  --cs-active-color-text: var(--bs-body-color, #212529);
+  --cs-selected-color: var(--bs-secondary-bg, #e9ecef);
+  --cs-selected-color-text: var(--bs-emphasis-color, #212529);
 
   --cs-border-width: var(--bs-border-width, 1px);
   --cs-border-color: var(--bs-border-color, #dee2e6);
@@ -45,7 +51,8 @@
     left: 0;
     right: 0;
     top: calc(100% - 4px);
-    background-color: white;
+    background-color: var(--cs-bg);
+    color: var(--cs-color);
 
     z-index: 10;
 
@@ -76,7 +83,7 @@
     }
 
     .ss-dropdown-search {
-      background-color: white;
+      background-color: var(--cs-bg);
       border-bottom: 1px solid var(--cs-border-color);
 
       padding: 0.5rem;
@@ -116,6 +123,7 @@
 
       &.selected {
         background-color: var(--cs-selected-color);
+        color: var(--cs-selected-color-text);
         font-weight: 600;
 
         .ss-remove-icon,
@@ -126,6 +134,7 @@
 
       &.active {
         background-color: var(--cs-active-color);
+        color: var(--cs-active-color-text);
       }
     }
   }
