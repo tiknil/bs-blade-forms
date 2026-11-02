@@ -2,6 +2,10 @@
 
 All notable changes to `bs-blade-forms` will be documented in this file
 
+## 0.9.1 - 2026-04-14
+
+- feat: Dark theme support for bootstrap 5.3
+
 ## 0.9.0 - 2026-04-14
 
 - feat: Add icon-text support
