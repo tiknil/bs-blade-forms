@@ -19,8 +19,12 @@ jobs:
         include:
           - laravel: 11.*
             testbench: 9.*
+          # testbench >= 10.5 pulls testbench-core >= 10.6.1, the first release
+          # that forwards the PHPUnit TestCase to HandleExceptions::flushState().
+          # Older core calls it without arguments, which breaks under the
+          # PHPUnit >= 12.3.4 required by Pest 4 (ErrorHandler::enable()).
           - laravel: 12.*
-            testbench: 10.*
+            testbench: ^10.5
           - laravel: 13.*
             testbench: 11.*
 
@@ -39,6 +43,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          # The EOL Laravel releases in the matrix carry security advisories that
+          # newer Composer blocks by default. Allow them for test runs only:
+          # this edits composer.json in the CI workspace, not the repository.
+          composer config policy.advisories.block false
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 

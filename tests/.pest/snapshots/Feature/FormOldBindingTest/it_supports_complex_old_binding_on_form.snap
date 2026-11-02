@@ -152,13 +152,13 @@
              autocomplete="off"
              placeholder="Search across the options"/>
       
-              <button class="btn btn-outline-secondary ss-select-all"
+              <button class="btn btn-light ss-select-all"
                 type="button"
                 title="Select all">
           <i class="bi bi-check2-all"></i>
         </button>
 
-        <button class="btn btn-outline-secondary ss-unselect-all"
+        <button class="btn btn-light ss-unselect-all"
                 type="button"
                 title="Unselect all">
           <i class="bi bi-dash-square-dotted"></i>
